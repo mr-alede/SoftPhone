@@ -2,6 +2,7 @@
 using Microsoft.Lync.Model.Conversation;
 using SoftPhone.Core.DomainEvents;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,12 +51,24 @@ namespace SoftPhone.Lync.ConversationTracker
 		private static void GenerateConversationAddedEvent(Conversation conversation)
 		{
 			var appConversation = new Core.Conversations.Conversation();
+
 			appConversation.Contacts = conversation.Participants
 				.Where(x => !x.IsSelf)
-				.Select(x => new Core.Conversations.Contact
+				.Select(x =>
 				{
-					Uri = x.Contact.Uri,
-					Name = _client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString()
+					var endpoints = (_client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.ContactEndpoints) as ICollection).OfType<ContactEndpoint>().ToList();
+
+					return new Core.Conversations.Contact
+					{
+						Uri = x.Contact.Uri,
+						Name = _client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString(),
+						Endpoints = endpoints.Select(e => new Core.Conversations.ContactEndpoint
+						{
+							Name = e.DisplayName,
+							Uri = e.Uri,
+							Type = (Core.Conversations.EndpointType)e.Type
+						}).ToList()
+					};
 				})
 			.ToList();
 
