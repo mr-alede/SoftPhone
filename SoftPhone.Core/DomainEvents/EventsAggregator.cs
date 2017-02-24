@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SoftPhone.Core.DomainEvents
 {
@@ -19,6 +20,7 @@ namespace SoftPhone.Core.DomainEvents
 
 			actions.Add(callback);
 		}
+
 		//Clears callbacks passed to Register on the current thread
 		public static void ClearCallbacks()
 		{
@@ -29,8 +31,12 @@ namespace SoftPhone.Core.DomainEvents
 		public static void Raise<T>(T args) where T : IDomainEvent
 		{
 			if (Container != null)
-				foreach (var handler in Container.ResolveAll<IDomainEventHandler<T>>())
+			{
+				var handlers = new[] { Container.Resolve<IDomainEventHandler<T>>() }.Union(Container.ResolveAll<IDomainEventHandler<T>>()).ToArray();
+
+				foreach (var handler in handlers)
 					handler.Handle(args);
+			}
 
 			if (actions != null)
 				foreach (var action in actions)

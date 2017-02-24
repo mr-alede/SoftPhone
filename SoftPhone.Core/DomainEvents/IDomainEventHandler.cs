@@ -1,7 +1,7 @@
 ﻿namespace SoftPhone.Core.DomainEvents
 {
-	public interface IDomainEventHandler<T> where T : IDomainEvent
+	public interface IDomainEventHandler<in TEvent> where TEvent : IDomainEvent
 	{
-		void Handle(T args);
+		void Handle(TEvent domainEvent);
 	}
 }

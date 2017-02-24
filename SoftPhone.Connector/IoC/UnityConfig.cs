@@ -21,13 +21,15 @@ namespace SoftPhone.Connector.IoC
 
 		public static void RegisterTypes(IUnityContainer container)
 		{
-			string[] assemblies = new[] { "SoftPhone.Connector", "SoftPhone.Lync" };
+			string[] assemblies = new[] { "SoftPhone.Connector", "SoftPhone.Lync", "SoftPhone.Core" };
 
-			foreach (var ev in assemblies.GetIntefaceImplementations<IDomainEvent>())
+			foreach (var domainEvent in assemblies.GetIntefaceImplementationsWithWrapper<IDomainEvent>(typeof(IDomainEventHandler<>)))
 			{
-				container.RegisterType(ev.Key, ev.Value);
+				foreach (Type eventHandler in domainEvent.Value)
+				{
+					container.RegisterType(domainEvent.Key, eventHandler);
+				}
 			}
-
 		}
 	}
 }

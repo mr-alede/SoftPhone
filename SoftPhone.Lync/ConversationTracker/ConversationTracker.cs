@@ -44,19 +44,19 @@ namespace SoftPhone.Lync.ConversationTracker
 			{
 				StoreConversation(modality.Conversation, ConversationID);
 				modality.ModalityStateChanged -= Program_ModalityStateChanged;
-
-				GenerateConversationAddedEvent(modality.Conversation);
 			}
 		}
 
 		private static void GenerateConversationAddedEvent(Conversation conversation)
 		{
 			var appConversation = new Core.Conversations.Conversation();
-			appConversation.Contacts = conversation.Participants.Select(x => new Core.Conversations.Contact
-			{
-				Uri = x.Contact.Uri,
-				Name = _client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString()
-			})
+			appConversation.Contacts = conversation.Participants
+				.Where(x => !x.IsSelf)
+				.Select(x => new Core.Conversations.Contact
+				{
+					Uri = x.Contact.Uri,
+					Name = _client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString()
+				})
 			.ToList();
 
 			EventsAggregator.Raise(new Core.Conversations.ConversationAddedEvent(appConversation));
@@ -69,6 +69,8 @@ namespace SoftPhone.Lync.ConversationTracker
 				Conversation = conversation,
 				ConversationCreated = DateTime.Now
 			});
+
+			GenerateConversationAddedEvent(conversation);
 		}
 
 		static void ConversationManager_ConversationRemoved(object sender, Microsoft.Lync.Model.Conversation.ConversationManagerEventArgs e)
