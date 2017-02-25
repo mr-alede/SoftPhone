@@ -182,6 +182,10 @@
       <Project>{ff48f584-73d1-4a5f-af4c-ceaf51701bd2}</Project>
       <Name>SoftPhone.Lync</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SoftPhone.Salesforce\SoftPhone.Salesforce.csproj">
+      <Project>{1E358069-742E-411D-A461-C8E72CF97CE9}</Project>
+      <Name>SoftPhone.Salesforce</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Bulb.ico" />

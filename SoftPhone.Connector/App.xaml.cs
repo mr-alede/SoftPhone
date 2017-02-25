@@ -2,6 +2,7 @@
 using SoftPhone.Connector.IoC;
 using SoftPhone.Core.Core;
 using SoftPhone.Lync.ConversationTracker;
+using SoftPhone.Salesforce.Client;
 using System.Windows;
 
 namespace SoftPhone.Connector
@@ -19,6 +20,8 @@ namespace SoftPhone.Connector
 			QueryProcessor.Container = UnityConfig.GetConfiguredContainer();
 
 			ConversationTracker.Init();
+
+			SfClient.Init();
 
 			//create the notifyicon (it's a resource declared in NotifyIconResources.xaml
 			notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
