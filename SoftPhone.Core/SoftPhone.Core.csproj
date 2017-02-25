@@ -56,14 +56,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conversations\ContactEndpoint.cs" />
-    <Compile Include="Conversations\Conversation.cs" />
-    <Compile Include="Conversations\Contact.cs" />
-    <Compile Include="Conversations\ConversationAddedEvent.cs" />
-    <Compile Include="DomainEvents\EventsAggregator.cs" />
-    <Compile Include="DomainEvents\IDomainEvent.cs" />
-    <Compile Include="DomainEvents\IDomainEventHandler.cs" />
+    <Compile Include="Commands\Salesforce\SaveCredentialsCommand.cs" />
+    <Compile Include="Domain\Conversations\ContactEndpoint.cs" />
+    <Compile Include="Domain\Conversations\Conversation.cs" />
+    <Compile Include="Domain\Conversations\Contact.cs" />
+    <Compile Include="Domain\Conversations\ConversationAddedEvent.cs" />
+    <Compile Include="Core\CommandsBus.cs" />
+    <Compile Include="Core\EventsAggregator.cs" />
+    <Compile Include="Core\IAppCommand.cs" />
+    <Compile Include="Core\ICommandHandler.cs" />
+    <Compile Include="Core\IDomainEvent.cs" />
+    <Compile Include="Core\IDomainEventHandler.cs" />
+    <Compile Include="Core\IQuery.cs" />
+    <Compile Include="Core\QueryProcessor.cs" />
+    <Compile Include="Domain\Salesforce\SalesforceCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\Salesforce\IGetCredentialsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

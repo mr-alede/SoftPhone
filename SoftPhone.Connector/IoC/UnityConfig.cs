@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
-using SoftPhone.Core.DomainEvents;
+using SoftPhone.Core.Core;
 using System;
 
 namespace SoftPhone.Connector.IoC
@@ -29,6 +29,19 @@ namespace SoftPhone.Connector.IoC
 				{
 					container.RegisterType(domainEvent.Key, eventHandler);
 				}
+			}
+
+			foreach (var command in assemblies.GetIntefaceImplementationsWithWrapper<IAppCommand>(typeof(ICommandHandler<>)))
+			{
+				foreach (Type eventHandler in command.Value)
+				{
+					container.RegisterType(command.Key, eventHandler);
+				}
+			}
+
+			foreach (var query in assemblies.GetIntefaceImplementations<IQuery>())
+			{
+				container.RegisterType(query.Key, query.Value);
 			}
 		}
 	}

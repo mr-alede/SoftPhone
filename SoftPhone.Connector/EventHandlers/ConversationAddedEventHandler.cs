@@ -1,7 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using SoftPhone.Connector.Popups;
-using SoftPhone.Core.Conversations;
-using SoftPhone.Core.DomainEvents;
+using SoftPhone.Core.Domain.Conversations;
+using SoftPhone.Core.Core;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 

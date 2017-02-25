@@ -1,6 +1,7 @@
-﻿using SoftPhone.Core.DomainEvents;
+﻿
+using SoftPhone.Core.Core;
 
-namespace SoftPhone.Core.Conversations
+namespace SoftPhone.Core.Domain.Conversations
 {
 	public class ConversationAddedEvent: IDomainEvent
 	{

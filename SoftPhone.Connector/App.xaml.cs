@@ -1,14 +1,11 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using SoftPhone.Connector.IoC;
-using SoftPhone.Core.DomainEvents;
+using SoftPhone.Core.Core;
 using SoftPhone.Lync.ConversationTracker;
 using System.Windows;
 
 namespace SoftPhone.Connector
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
 	public partial class App : Application
 	{
 		private TaskbarIcon notifyIcon;
@@ -18,6 +15,8 @@ namespace SoftPhone.Connector
 			base.OnStartup(e);
 
 			EventsAggregator.Container = UnityConfig.GetConfiguredContainer();
+			CommandsBus.Container = UnityConfig.GetConfiguredContainer();
+			QueryProcessor.Container = UnityConfig.GetConfiguredContainer();
 
 			ConversationTracker.Init();
 

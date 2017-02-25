@@ -76,6 +76,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,6 +96,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommandHandlers\Salesforce\SaveCredentialsCommandHandler.cs" />
+    <Compile Include="Domain\Salesforce\SalesforceProtectedCredentials.cs" />
     <Compile Include="EventHandlers\ConversationAddedEventHandler.cs" />
     <Compile Include="IoC\TypeExtensions.cs" />
     <Compile Include="IoC\UnityConfig.cs" />
@@ -105,6 +108,10 @@
       <DependentUpon>ConversationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popups\ConversationWindowViewModel.cs" />
+    <Compile Include="Popups\SalesforceCredentialsWindow.xaml.cs">
+      <DependentUpon>SalesforceCredentialsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\Salesforce\GetCredentialsQuery.cs" />
     <Compile Include="Resources\NotifyIconViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Popups\ConversationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popups\SalesforceCredentialsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

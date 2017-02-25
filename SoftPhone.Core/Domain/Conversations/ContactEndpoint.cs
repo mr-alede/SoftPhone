@@ -1,4 +1,4 @@
-﻿namespace SoftPhone.Core.Conversations
+﻿namespace SoftPhone.Core.Domain.Conversations
 {
 	public class ContactEndpoint
 	{

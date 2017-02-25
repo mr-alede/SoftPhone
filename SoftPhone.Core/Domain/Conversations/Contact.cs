@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SoftPhone.Core.Conversations
+namespace SoftPhone.Core.Domain.Conversations
 {
 	public  class Contact
 	{

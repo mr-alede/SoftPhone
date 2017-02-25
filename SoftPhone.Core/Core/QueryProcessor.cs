@@ -1,11 +1,10 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SoftPhone.Core.DomainEvents
+namespace SoftPhone.Core.Core
 {
-	public static class EventsAggregator
+	public static class QueryProcessor
 	{
 		[ThreadStatic] //so that each thread has its own callbacks
 		private static List<Delegate> actions;
@@ -28,20 +27,15 @@ namespace SoftPhone.Core.DomainEvents
 		}
 
 		//Raises the given domain event
-		public static void Raise<T>(T args) where T : IDomainEvent
+		public static T GetQuery<T>() where T : IQuery
 		{
 			if (Container != null)
 			{
-				var handlers = new[] { Container.Resolve<IDomainEventHandler<T>>() }.Union(Container.ResolveAll<IDomainEventHandler<T>>()).ToArray();
-
-				foreach (var handler in handlers)
-					handler.Handle(args);
+				return Container.Resolve<T>();
 			}
 
-			if (actions != null)
-				foreach (var action in actions)
-					if (action is Action<T>)
-						((Action<T>)action)(args);
+			throw new InvalidOperationException(string.Format("Cannot resolve type: {0}", typeof(T)));
 		}
 	}
+
 }

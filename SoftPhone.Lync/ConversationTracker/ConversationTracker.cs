@@ -1,6 +1,6 @@
 ﻿using Microsoft.Lync.Model;
 using Microsoft.Lync.Model.Conversation;
-using SoftPhone.Core.DomainEvents;
+using SoftPhone.Core.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,29 +50,20 @@ namespace SoftPhone.Lync.ConversationTracker
 
 		private static void GenerateConversationAddedEvent(Conversation conversation)
 		{
-			var appConversation = new Core.Conversations.Conversation();
+			string id = conversation.Properties[ConversationProperty.Id].ToString();
+			var appConversation = new Core.Domain.Conversations.Conversation(id);
 
 			appConversation.Contacts = conversation.Participants
 				.Where(x => !x.IsSelf)
-				.Select(x =>
-				{
-					var endpoints = (_client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.ContactEndpoints) as ICollection).OfType<ContactEndpoint>().ToList();
-
-					return new Core.Conversations.Contact
-					{
-						Uri = x.Contact.Uri,
-						Name = _client.ContactManager.GetContactByUri(x.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString(),
-						Endpoints = endpoints.Select(e => new Core.Conversations.ContactEndpoint
-						{
-							Name = e.DisplayName,
-							Uri = e.Uri,
-							Type = (Core.Conversations.EndpointType)e.Type
-						}).ToList()
-					};
-				})
+				.Select(x => CreateContact(x))
 			.ToList();
 
-			EventsAggregator.Raise(new Core.Conversations.ConversationAddedEvent(appConversation));
+			appConversation.Self = conversation.Participants
+				.Where(x => x.IsSelf)
+				.Select(x => CreateContact(x))
+				.First();
+
+			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationAddedEvent(appConversation));
 		}
 
 		private static void StoreConversation(Conversation conversation, string ConversationID)
@@ -96,6 +87,24 @@ namespace SoftPhone.Lync.ConversationTracker
 				Console.WriteLine("Conversation {0} lasted {1} seconds", ConversationID, conversationLength);
 				ActiveConversations.Remove(ConversationID);
 			}
+		}
+
+		private static Core.Domain.Conversations.Contact CreateContact(Participant participant)
+		{
+			var endpoints = (_client.ContactManager.GetContactByUri(participant.Contact.Uri).GetContactInformation(ContactInformationType.ContactEndpoints) as ICollection).OfType<ContactEndpoint>().ToList();
+
+			return new Core.Domain.Conversations.Contact
+			{
+				Uri = participant.Contact.Uri,
+				Name = _client.ContactManager.GetContactByUri(participant.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString(),
+				Endpoints = endpoints.Select(e => new Core.Domain.Conversations.ContactEndpoint
+				{
+					Name = e.DisplayName,
+					Uri = e.Uri,
+					Type = (Core.Domain.Conversations.EndpointType)e.Type
+				}).ToList()
+			};
+
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace SoftPhone.Core.DomainEvents
+﻿namespace SoftPhone.Core.Core
 {
 	public interface IDomainEvent
 	{

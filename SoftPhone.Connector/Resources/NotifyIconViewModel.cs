@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SoftPhone.Connector.Popups;
+using SoftPhone.Core.Core;
+using SoftPhone.Core.Queries.Salesforce;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -6,9 +9,28 @@ namespace SoftPhone.Connector.Resources
 {
 	public class NotifyIconViewModel
 	{
-		/// <summary>
-		/// Shows a window, if none is already open.
-		/// </summary>
+		public ICommand ShowSalesforceCredentialsWindowCommand
+		{
+			get
+			{
+				return new DelegateCommand
+				{
+					CanExecuteFunc = () => true,
+					CommandAction = () =>
+					{
+						var query = QueryProcessor.GetQuery<IGetCredentialsQuery>();
+						var credentials = query.Execute();
+
+						var window = new SalesforceCredentialsWindow(credentials);
+
+						window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+						window.ShowDialog();
+					}
+				};
+			}
+		}
+
+
 		public ICommand ShowWindowCommand
 		{
 			get
@@ -25,9 +47,6 @@ namespace SoftPhone.Connector.Resources
 			}
 		}
 
-		/// <summary>
-		/// Hides the main window. This command is only enabled if a window is open.
-		/// </summary>
 		public ICommand HideWindowCommand
 		{
 			get

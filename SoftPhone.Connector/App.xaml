@@ -17,6 +17,25 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Resources/NotifyIconResource.xaml" />
 			</ResourceDictionary.MergedDictionaries>
+
+			<LinearGradientBrush x:Key="BrushOne" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="0.5">
+				<LinearGradientBrush.GradientStops>
+					<GradientStopCollection>
+						<GradientStop Color="Black" Offset="0" />
+						<GradientStop Color="Silver" Offset="1" />
+					</GradientStopCollection>
+				</LinearGradientBrush.GradientStops>
+			</LinearGradientBrush>
+
+			<LinearGradientBrush x:Key="AppBackground" EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+				<GradientStop Color="#FF4B4B4B"
+                                  Offset="0" />
+				<GradientStop Color="#FF8F8F8F"
+                                  Offset="1" />
+			</LinearGradientBrush>
+
 		</ResourceDictionary>
+	
 	</Application.Resources>
 </Application>
