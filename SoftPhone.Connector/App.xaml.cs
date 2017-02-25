@@ -1,8 +1,8 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using SoftPhone.Connector.IoC;
+using SoftPhone.Core.Commands.Salesforce;
 using SoftPhone.Core.Core;
 using SoftPhone.Lync.ConversationTracker;
-using SoftPhone.Salesforce.Client;
 using System.Windows;
 
 namespace SoftPhone.Connector
@@ -21,7 +21,7 @@ namespace SoftPhone.Connector
 
 			ConversationTracker.Init();
 
-			SfClient.Init();
+			CommandsBus.Execute(new SalesforceConnectCommand());
 
 			//create the notifyicon (it's a resource declared in NotifyIconResources.xaml
 			notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");

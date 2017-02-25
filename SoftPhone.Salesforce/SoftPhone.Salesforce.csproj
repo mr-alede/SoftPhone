@@ -51,6 +51,7 @@
     <Compile Include="Client\SalesforceListener.cs" />
     <Compile Include="Client\SfClient.cs" />
     <Compile Include="Client\SfClientStateBase.cs" />
+    <Compile Include="CommandHandlers\SalesforceConnectCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\SalesforceService\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -21,12 +21,14 @@ namespace SoftPhone.Connector.Popups
 
 			Password.Password = _credentials.Password;
 			Login.Text = _credentials.Login;
+			Token.Text = _credentials.SecurityToken;
 		}
 
 		private void save_Click(object sender, RoutedEventArgs e)
 		{
 			_credentials.Login = Login.Text;
 			_credentials.Password = Password.Password;
+			_credentials.SecurityToken = Token.Text;
 
 			CommandsBus.Execute(new SaveCredentialsCommand(_credentials));
 

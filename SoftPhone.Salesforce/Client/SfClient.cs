@@ -7,9 +7,9 @@ namespace SoftPhone.Salesforce.Client
 	{
 		internal static SfClientStateBase State = new DisconnectedSfClient();
 
-		public static void Init()
+		public static void Connect(SalesforceCredentials credentials)
 		{
-			State.Connect(new SalesforceCredentials { Login = "mr.alede1@gmail.com", Password="_passpass123" + "fND1mf1NKH9IKuMfcNEIfICiu" });
+			State.Connect(credentials);
 		}
 
 		public static void Push(Conversation conversation)

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Salesforce\SalesforceConnectCommand.cs" />
     <Compile Include="Commands\Salesforce\SaveCredentialsCommand.cs" />
     <Compile Include="Domain\Conversations\ContactEndpoint.cs" />
     <Compile Include="Domain\Conversations\Conversation.cs" />

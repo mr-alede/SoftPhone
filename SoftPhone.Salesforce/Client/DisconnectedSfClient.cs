@@ -44,7 +44,7 @@ namespace SoftPhone.Salesforce.Client
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
 			var soapClient = new SoapClient();
-			var result = soapClient.login(null, credentials.Login, credentials.Password);
+			var result = soapClient.login(null, credentials.Login, credentials.Password + credentials.SecurityToken);
 			if (result.passwordExpired)
 				throw new ArgumentOutOfRangeException("Password has expired");
 
