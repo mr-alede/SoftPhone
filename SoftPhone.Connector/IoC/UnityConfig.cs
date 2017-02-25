@@ -21,7 +21,7 @@ namespace SoftPhone.Connector.IoC
 
 		public static void RegisterTypes(IUnityContainer container)
 		{
-			string[] assemblies = new[] { "SoftPhone.Connector", "SoftPhone.Lync", "SoftPhone.Core" };
+			string[] assemblies = new[] { "SoftPhone.Connector", "SoftPhone.Lync", "SoftPhone.Core", "SoftPhone.Salesforce" };
 
 			foreach (var domainEvent in assemblies.GetIntefaceImplementationsWithWrapper<IDomainEvent>(typeof(IDomainEventHandler<>)))
 			{

@@ -2,7 +2,6 @@
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Domain.Salesforce;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using Cometd.Client;
 using Cometd.Client.Transport;
@@ -56,8 +55,8 @@ namespace SoftPhone.Salesforce.Client
 			HttpClientTransport transport = new LongPollingTransport(options);
 
 			// add the needed auth headers
-			var headers = new NameValueCollection();
-			headers.Add("Authorization", "OAuth " + result.sessionId);
+			//var headers = new NameValueCollection();
+			//headers.Add("Authorization", "OAuth " + result.sessionId);
 			//transport.AddHeaders(headers);
 			transport.setOption(HttpRequestHeader.Authorization.ToString(), "OAuth " + result.sessionId);
 

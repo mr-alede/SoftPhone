@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SoftPhone.Core.Domain.Conversations;
-using Cometd.Client;
 using SoftPhone.Core.Domain.Salesforce;
 
 namespace SoftPhone.Salesforce.Client
