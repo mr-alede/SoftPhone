@@ -59,6 +59,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SfWrappers\SfApiService.cs" />
+    <Compile Include="SfWrappers\SfConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SoftPhone.Core\SoftPhone.Core.csproj">

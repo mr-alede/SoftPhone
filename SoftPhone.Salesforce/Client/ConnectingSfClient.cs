@@ -14,6 +14,7 @@ namespace SoftPhone.Salesforce.Client
 	internal class ConnectingSfClient : SfClientStateBase
 	{
 		private BayeuxClient _client;
+		private SoapClient _soapClient;
 
 		public ConnectingSfClient(SalesforceCredentials credentials)
 		{
@@ -29,7 +30,7 @@ namespace SoftPhone.Salesforce.Client
 
 					_client.getChannel(CHANNEL).subscribe(new SalesforceListener());
 
-					SfClient.State = new ConnectedSfClient(_client);
+					SfClient.State = new ConnectedSfClient(_client, _soapClient);
 
 					EventsAggregator.Raise(new SalesforceClientConnectedEvent());
 				}
@@ -70,8 +71,8 @@ namespace SoftPhone.Salesforce.Client
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-			var soapClient = new SoapClient();
-			var result = soapClient.login(null, credentials.Login, credentials.Password + credentials.SecurityToken);
+			_soapClient = new SoapClient();
+			var result = _soapClient.login(null, credentials.Login, credentials.Password + credentials.SecurityToken);
 			if (result.passwordExpired)
 				throw new ArgumentOutOfRangeException("Password has expired");
 
