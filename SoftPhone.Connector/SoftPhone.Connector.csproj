@@ -97,7 +97,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Domain\Salesforce\SalesforceProtectedCredentials.cs" />
-    <Compile Include="EventHandlers\ConversationAddedEventHandler.cs" />
+    <Compile Include="EventHandlers\Lync\ConversationAddedEventHandler.cs" />
+    <Compile Include="EventHandlers\Salesforce\SalesforceClientConnectedEventHandler.cs" />
+    <Compile Include="EventHandlers\Salesforce\SalesforceClientDisconnectedEventHandler.cs" />
+    <Compile Include="EventHandlers\Salesforce\SalesforceClientErrorEventHandler.cs" />
     <Compile Include="IoC\TypeExtensions.cs" />
     <Compile Include="IoC\UnityConfig.cs" />
     <Compile Include="Popups\ConversationBalloon.xaml.cs">
@@ -109,6 +112,9 @@
     <Compile Include="Popups\ConversationWindowViewModel.cs" />
     <Compile Include="Popups\SalesforceCredentialsWindow.xaml.cs">
       <DependentUpon>SalesforceCredentialsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\ToastBalloon.xaml.cs">
+      <DependentUpon>ToastBalloon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repositories\Salesforce\SalesforceCredentialsRepository.cs" />
     <Compile Include="Resources\NotifyIconViewModel.cs" />
@@ -133,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Popups\SalesforceCredentialsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popups\ToastBalloon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

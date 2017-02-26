@@ -5,7 +5,7 @@ using SoftPhone.Core.Core;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace SoftPhone.Connector.EventHandlers
+namespace SoftPhone.Connector.EventHandlers.Lync
 {
 	public class ConversationAddedEventHandler : IDomainEventHandler<ConversationAddedEvent>
 	{

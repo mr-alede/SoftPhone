@@ -2,7 +2,6 @@
 using SoftPhone.Core.Core;
 using SoftPhone.Core.Repositories.Salesforce;
 using SoftPhone.Salesforce.Client;
-using System.Threading.Tasks;
 
 namespace SoftPhone.Salesforce.CommandHandlers
 {
@@ -17,11 +16,7 @@ namespace SoftPhone.Salesforce.CommandHandlers
 		public void Execute(SalesforceConnectCommand command)
 		{
 			var credentials = _repo.ReadCredentials();
-
-			Task.Run(() => {
-				//credentials.Password += "fND1mf1NKH9IKuMfcNEIfICiu"; // salesforce security token
-				SfClient.Connect(credentials);
-			});
+			SfClient.Connect(credentials);
 		}
 	}
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Domain.Salesforce;
+using SoftPhone.Core.Events.Salesforce;
+using SoftPhone.Core.Core;
 
 namespace SoftPhone.Salesforce.Client
 {
@@ -29,6 +31,8 @@ namespace SoftPhone.Salesforce.Client
 
 				innerException = innerException.InnerException;
 			}
+
+			EventsAggregator.Raise(new SalesforceClientErrorEvent(innerException.Message));
 		}
 	}
 }

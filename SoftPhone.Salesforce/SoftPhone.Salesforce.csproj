@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\ConnectedSfClient.cs" />
+    <Compile Include="Client\ConnectingSfClient.cs" />
     <Compile Include="Client\DisconnectedSfClient.cs" />
     <Compile Include="Client\SalesforceListener.cs" />
     <Compile Include="Client\SfClient.cs" />
