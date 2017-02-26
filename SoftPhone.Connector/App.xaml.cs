@@ -1,4 +1,5 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Practices.Unity;
 using SoftPhone.Connector.IoC;
 using SoftPhone.Core.Commands.Salesforce;
 using SoftPhone.Core.Core;
@@ -10,6 +11,7 @@ namespace SoftPhone.Connector
 	public partial class App : Application
 	{
 		private TaskbarIcon notifyIcon;
+		private static readonly IUnityContainer _container = UnityConfig.GetConfiguredContainer();
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -33,5 +35,9 @@ namespace SoftPhone.Connector
 			base.OnExit(e);
 		}
 
+		public static T Resolve<T>()
+		{
+			return _container.Resolve<T>();
+		}
 	}
 }

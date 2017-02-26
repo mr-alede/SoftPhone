@@ -43,6 +43,11 @@ namespace SoftPhone.Connector.IoC
 			{
 				container.RegisterType(query.Key, query.Value);
 			}
+
+			foreach (var repo in assemblies.GetIntefaceImplementations<IRepository>())
+			{
+				container.RegisterType(repo.Key, repo.Value);
+			}
 		}
 	}
 }

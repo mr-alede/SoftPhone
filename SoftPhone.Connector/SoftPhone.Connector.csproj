@@ -96,7 +96,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandHandlers\Salesforce\SaveCredentialsCommandHandler.cs" />
     <Compile Include="Domain\Salesforce\SalesforceProtectedCredentials.cs" />
     <Compile Include="EventHandlers\ConversationAddedEventHandler.cs" />
     <Compile Include="IoC\TypeExtensions.cs" />
@@ -111,7 +110,7 @@
     <Compile Include="Popups\SalesforceCredentialsWindow.xaml.cs">
       <DependentUpon>SalesforceCredentialsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Queries\Salesforce\GetCredentialsQuery.cs" />
+    <Compile Include="Repositories\Salesforce\SalesforceCredentialsRepository.cs" />
     <Compile Include="Resources\NotifyIconViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -194,7 +193,10 @@
     <Resource Include="Icons\Inactive.ico" />
     <Resource Include="Icons\NetDrives.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CommandHandlers\Salesforce\" />
+    <Folder Include="Queries\Salesforce\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>

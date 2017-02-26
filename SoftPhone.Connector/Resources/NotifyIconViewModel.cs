@@ -1,6 +1,4 @@
 ﻿using SoftPhone.Connector.Popups;
-using SoftPhone.Core.Core;
-using SoftPhone.Core.Queries.Salesforce;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -18,10 +16,7 @@ namespace SoftPhone.Connector.Resources
 					CanExecuteFunc = () => true,
 					CommandAction = () =>
 					{
-						var query = QueryProcessor.GetQuery<IGetCredentialsQuery>();
-						var credentials = query.Execute();
-
-						var window = new SalesforceCredentialsWindow(credentials);
+						var window = new SalesforceCredentialsWindow();
 
 						window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 						window.ShowDialog();
