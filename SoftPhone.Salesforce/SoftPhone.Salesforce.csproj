@@ -34,6 +34,18 @@
       <HintPath>..\packages\cometd2.2.1.4734.29273\lib\net35\cometd2.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Salesforce.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9f7864e53fb79388, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeveloperForce.Force.1.4.0-beta\lib\Salesforce.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Salesforce.Force, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9f7864e53fb79388, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeveloperForce.Force.1.4.0-beta\lib\Salesforce.Force.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -53,12 +65,14 @@
     <Compile Include="Client\SfClient.cs" />
     <Compile Include="Client\SfClientStateBase.cs" />
     <Compile Include="CommandHandlers\SalesforceConnectCommandHandler.cs" />
+    <Compile Include="EventHandlers\Lync\ConversationAddedEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\SalesforceService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SfWrappers\ISfApiService.cs" />
     <Compile Include="SfWrappers\SfApiService.cs" />
     <Compile Include="SfWrappers\SfConnection.cs" />
   </ItemGroup>

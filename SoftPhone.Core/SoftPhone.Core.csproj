@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Commands\Salesforce\SalesforceConnectCommand.cs" />
     <Compile Include="Core\IRepository.cs" />
+    <Compile Include="Core\IService.cs" />
+    <Compile Include="Core\Services.cs" />
     <Compile Include="Domain\Conversations\ContactEndpoint.cs" />
     <Compile Include="Domain\Conversations\Conversation.cs" />
     <Compile Include="Domain\Conversations\Contact.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Core\IQuery.cs" />
     <Compile Include="Core\QueryProcessor.cs" />
     <Compile Include="Domain\Salesforce\SalesforceCredentials.cs" />
+    <Compile Include="Domain\Salesforce\SalesforceSettings.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientConnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientDisconnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientErrorEvent.cs" />
@@ -82,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Queries\Salesforce\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

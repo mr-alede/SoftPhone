@@ -48,6 +48,12 @@ namespace SoftPhone.Connector.IoC
 			{
 				container.RegisterType(repo.Key, repo.Value);
 			}
+
+			foreach (var service in assemblies.GetIntefaceImplementations<IService>())
+			{
+				container.RegisterType(service.Key, service.Value);
+			}
+
 		}
 	}
 }

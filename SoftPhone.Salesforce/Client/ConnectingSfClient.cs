@@ -4,44 +4,40 @@ using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Domain.Salesforce;
 using System.Collections.Generic;
 using System.Net;
-using SoftPhone.Salesforce.SalesforceService;
 using Cometd.Client.Transport;
 using SoftPhone.Core.Core;
 using SoftPhone.Core.Events.Salesforce;
+using SoftPhone.Salesforce.SfWrappers;
+using System.Threading.Tasks;
 
 namespace SoftPhone.Salesforce.Client
 {
 	internal class ConnectingSfClient : SfClientStateBase
 	{
-		private BayeuxClient _client;
-		private SoapClient _soapClient;
 
 		public ConnectingSfClient(SalesforceCredentials credentials)
 		{
-			System.Threading.Tasks.Task.Run(() =>
+			CreateClient(credentials).ContinueWith(result => 
 			{
-				//credentials.Password += "fND1mf1NKH9IKuMfcNEIfICiu"; // salesforce security token
-				try
-				{
-					_client = CreateClient(credentials);
-
-					_client.handshake();
-					_client.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
-
-					_client.getChannel(CHANNEL).subscribe(new SalesforceListener());
-
-					SfClient.State = new ConnectedSfClient(_client, _soapClient);
-
-					EventsAggregator.Raise(new SalesforceClientConnectedEvent());
-				}
-				catch (Exception ex)
+				if (result.IsFaulted)
 				{
 					SfClient.State = new DisconnectedSfClient();
-
-					HandleException(ex);
+					HandleException(result.Exception);
+					return;
 				}
-			});
 
+				var client = result.Result;
+
+				client.handshake();
+				client.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
+
+				client.getChannel(CHANNEL).subscribe(new SalesforceListener());
+
+				SfClient.State = new ConnectedSfClient(client, credentials);
+
+				EventsAggregator.Raise(new SalesforceClientConnectedEvent());
+
+			});
 		}
 
 		public override void Connect(SalesforceCredentials credentials)
@@ -50,31 +46,19 @@ namespace SoftPhone.Salesforce.Client
 
 		public override void Disconnect()
 		{
-			try
-			{
-				_client.disconnect();
-				_client.waitFor(1000, new[] { BayeuxClient.State.DISCONNECTED });
-
-				SfClient.State = new DisconnectedSfClient();
-			}
-			catch (Exception ex)
-			{
-				HandleException(ex);
-			}
 		}
 
 		public override void Push(Conversation conversation)
 		{
 		}
 
-		private BayeuxClient CreateClient(SalesforceCredentials credentials)
+		private async Task<BayeuxClient> CreateClient(SalesforceCredentials credentials)
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-			_soapClient = new SoapClient();
-			var result = _soapClient.login(null, credentials.Login, credentials.Password + credentials.SecurityToken);
-			if (result.passwordExpired)
-				throw new ArgumentOutOfRangeException("Password has expired");
+
+			var connection = new SfConnection();
+			await connection.Login(credentials);
 
 			var options = new Dictionary<String, Object>
 			{
@@ -86,10 +70,10 @@ namespace SoftPhone.Salesforce.Client
 			//var headers = new NameValueCollection();
 			//headers.Add("Authorization", "OAuth " + result.sessionId);
 			//transport.AddHeaders(headers);
-			transport.setOption(HttpRequestHeader.Authorization.ToString(), "OAuth " + result.sessionId);
+			transport.setOption(HttpRequestHeader.Authorization.ToString(), "OAuth " + connection.Id);
 
 			// only need the scheme and host, strip out the rest
-			var serverUri = new Uri(result.serverUrl);
+			var serverUri = new Uri(connection.InstanceUrl);
 			String endpoint = String.Format("{0}://{1}{2}", serverUri.Scheme, serverUri.Host, STREAMING_ENDPOINT_URI);
 
 			return new BayeuxClient(endpoint, new[] { transport });

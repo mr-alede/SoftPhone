@@ -23,16 +23,13 @@ namespace SoftPhone.Salesforce.Client
 
 		protected void HandleException(Exception e)
 		{
-			Exception innerException = e.InnerException;
-			while (innerException != null)
+			Exception exception = e;
+			while (exception.InnerException != null)
 			{
-				Console.WriteLine(e.Message);
-				Console.WriteLine(e.StackTrace);
-
-				innerException = innerException.InnerException;
+				exception = exception.InnerException;
 			}
 
-			EventsAggregator.Raise(new SalesforceClientErrorEvent(innerException.Message));
+			EventsAggregator.Raise(new SalesforceClientErrorEvent(exception.Message));
 		}
 	}
 }

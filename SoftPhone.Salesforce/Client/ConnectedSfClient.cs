@@ -4,18 +4,19 @@ using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Domain.Salesforce;
 using System.Collections.Generic;
 using SoftPhone.Salesforce.SalesforceService;
+using SoftPhone.Salesforce.SfWrappers;
 
 namespace SoftPhone.Salesforce.Client
 {
 	internal class ConnectedSfClient : SfClientStateBase
 	{
 		private readonly BayeuxClient _client;
-		private readonly SoapClient _soapClient;
+		private readonly SalesforceCredentials _credentials;
 
-		public ConnectedSfClient(BayeuxClient client, SoapClient soapClient)
+		public ConnectedSfClient(BayeuxClient client, SalesforceCredentials credentials)
 		{
 			_client = client;
-			_soapClient = soapClient;
+			_credentials = credentials;
 		}
 
 		public override void Connect(SalesforceCredentials credentials)
@@ -42,11 +43,15 @@ namespace SoftPhone.Salesforce.Client
 		{
 			try
 			{
+				using (var service = new SfApiService(_credentials))
+				{
+					service.Insert(conversation);
+				}
 
 				// Publishing to channels
-				var data = new Dictionary<String, Object>();
-				data.Add("conversation", conversation);
-				_client.getChannel(CHANNEL).publish(data);
+				//var data = new Dictionary<String, Object>();
+				//data.Add("conversation", conversation);
+				//_client.getChannel(CHANNEL).publish(data);
 
 			}
 			catch (Exception ex)
