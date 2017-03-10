@@ -8,8 +8,8 @@ namespace SoftPhone.Salesforce.Client
 {
 	public abstract class SfClientStateBase
 	{
-		public const String CHANNEL = "/topic/InvoiceStatementUpdates";
-		public const String STREAMING_ENDPOINT_URI = "/cometd/29.0";
+		public const String CHANNEL = "/topic/Call_All";
+		public const String STREAMING_ENDPOINT_URI = "/cometd/36.0";
 
 		// long pull durations
 		public const int READ_TIMEOUT = 120 * 1000;
