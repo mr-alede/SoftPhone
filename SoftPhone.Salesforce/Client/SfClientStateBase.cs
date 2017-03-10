@@ -19,8 +19,6 @@ namespace SoftPhone.Salesforce.Client
 
 		public abstract void Disconnect();
 
-		public abstract void Push(Conversation conversation);
-
 		protected void HandleException(Exception e)
 		{
 			Exception exception = e;

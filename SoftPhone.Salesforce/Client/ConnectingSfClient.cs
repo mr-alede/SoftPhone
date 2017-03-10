@@ -48,10 +48,6 @@ namespace SoftPhone.Salesforce.Client
 		{
 		}
 
-		public override void Push(Conversation conversation)
-		{
-		}
-
 		private async Task<BayeuxClient> CreateClient(SalesforceCredentials credentials)
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;

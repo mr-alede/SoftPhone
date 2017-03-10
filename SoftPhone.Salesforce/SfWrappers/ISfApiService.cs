@@ -7,7 +7,7 @@ namespace SoftPhone.Salesforce.SfWrappers
 {
 	public interface ISfApiService: IService
 	{
-		Task<SuccessResponse> Insert(Conversation conversation, ConversationStatus status);
+		Task<SuccessResponse> Insert(AppConversation conversation);
 	}
 
 }

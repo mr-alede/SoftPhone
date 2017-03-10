@@ -12,11 +12,6 @@ namespace SoftPhone.Salesforce.Client
 			State.Connect(credentials);
 		}
 
-		public static void Push(Conversation conversation)
-		{
-			State.Push(conversation);
-		}
-
 		public static void Disconnect()
 		{
 			State.Disconnect();

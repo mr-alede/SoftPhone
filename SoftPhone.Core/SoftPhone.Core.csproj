@@ -61,9 +61,9 @@
     <Compile Include="Core\IService.cs" />
     <Compile Include="Core\Services.cs" />
     <Compile Include="Domain\Conversations\ContactEndpoint.cs" />
-    <Compile Include="Domain\Conversations\Conversation.cs" />
+    <Compile Include="Domain\Conversations\AppConversation.cs" />
     <Compile Include="Domain\Conversations\Contact.cs" />
-    <Compile Include="Domain\Conversations\ConversationAddedEvent.cs" />
+    <Compile Include="Domain\Conversations\ConversationEvent.cs" />
     <Compile Include="Core\CommandsBus.cs" />
     <Compile Include="Core\EventsAggregator.cs" />
     <Compile Include="Core\IAppCommand.cs" />

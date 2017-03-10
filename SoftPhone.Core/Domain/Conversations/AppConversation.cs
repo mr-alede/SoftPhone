@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SoftPhone.Core.Domain.Conversations
 {
-	public class Conversation
+	public class AppConversation
 	{
 		public string Id { get; private set; }
 
@@ -13,9 +13,12 @@ namespace SoftPhone.Core.Domain.Conversations
 
 		public Contact Self { get; set; }
 
-		public Conversation(string id)
+		public ConversationStatus Status { get; private set; }
+
+		public AppConversation(string id, ConversationStatus status)
 		{
 			Id = id;
+			Status = status;
 		}
 	}
 }

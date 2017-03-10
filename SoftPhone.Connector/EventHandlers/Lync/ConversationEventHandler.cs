@@ -7,10 +7,13 @@ using System.Windows.Controls.Primitives;
 
 namespace SoftPhone.Connector.EventHandlers.Lync
 {
-	public class ConversationAddedEventHandler : IDomainEventHandler<ConversationAddedEvent>
+	public class ConversationEventHandler : IDomainEventHandler<ConversationEvent>
 	{
-		public void Handle(ConversationAddedEvent evt)
+		public void Handle(ConversationEvent evt)
 		{
+			if (evt.Conversation.Status == ConversationStatus.Finished)
+				return;
+
 			Application.Current.Dispatcher.Invoke(() =>
 			{
 				var win = new ConversationWindow();
@@ -20,7 +23,7 @@ namespace SoftPhone.Connector.EventHandlers.Lync
 			});
 		}
 
-		private void ShowDialog(Window window, ConversationAddedEvent evt)
+		private void ShowDialog(Window window, ConversationEvent evt)
 		{
 			var caller = evt.Conversation.Caller;
 
@@ -35,7 +38,7 @@ namespace SoftPhone.Connector.EventHandlers.Lync
 			window.ShowDialog();
 		}
 
-		private void ShowBalloon(ConversationAddedEvent evt)
+		private void ShowBalloon(ConversationEvent evt)
 		{
 			var notifyIcon = Application.Current.Resources["NotifyIcon"] as TaskbarIcon;
 			if (notifyIcon != null)

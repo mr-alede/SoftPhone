@@ -18,9 +18,5 @@ namespace SoftPhone.Salesforce.Client
 		public override void Disconnect()
 		{
 		}
-
-		public override void Push(Conversation conversation)
-		{
-		}
 	}
 }

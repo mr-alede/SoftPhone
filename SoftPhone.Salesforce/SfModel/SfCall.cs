@@ -17,11 +17,19 @@ namespace SoftPhone.Salesforce.SfModel
 		public string User__c { get; set; }
 
 
-		public SfCall(Conversation conversation, ConversationStatus status)
+		public SfCall(AppConversation conversation)
 		{
-			this.Email__c = conversation.Self.Uri;
+			this.Email__c = NormalizeEmail(conversation.Self.Uri);
 			this.Number__c = conversation.Caller.Uri;
-			this.Status__c = status.ToString();
+			this.Status__c = conversation.Status.ToLookupString();
+		}
+
+		private string NormalizeEmail(string source)
+		{
+			if (string.IsNullOrEmpty(source))
+				return source;
+
+			return source.Replace("sip:", "");
 		}
 	}
 }

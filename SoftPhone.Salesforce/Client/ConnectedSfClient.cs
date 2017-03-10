@@ -36,26 +36,5 @@ namespace SoftPhone.Salesforce.Client
 				HandleException(ex);
 			}
 		}
-
-		public override void Push(Conversation conversation)
-		{
-			try
-			{
-				//using (var service = new SfApiService(_credentials))
-				//{
-				//	service.Insert(conversation);
-				//}
-
-				// Publishing to channels
-				//var data = new Dictionary<String, Object>();
-				//data.Add("conversation", conversation);
-				//_client.getChannel(CHANNEL).publish(data);
-
-			}
-			catch (Exception ex)
-			{
-				HandleException(ex);
-			}
-		}
 	}
 }
