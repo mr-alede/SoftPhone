@@ -4,22 +4,43 @@ using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Core;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SoftPhone.Connector.EventHandlers.Lync
 {
 	public class ConversationEventHandler : IDomainEventHandler<ConversationEvent>
 	{
+		static Dictionary<string, ConversationWindow> ActiveConversationPopups = new Dictionary<string, ConversationWindow>();
+
 		public void Handle(ConversationEvent evt)
 		{
-			if (evt.Conversation.Status == ConversationStatus.Finished)
-				return;
-
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				var win = new ConversationWindow();
-				ShowDialog(win, evt);
+				if (evt.Conversation.Status == ConversationStatus.Finished)
+				{
+					foreach (var popup in ActiveConversationPopups.Select(x=>x).ToList())
+					{
+						popup.Value.Close();
+						ActiveConversationPopups.Remove(popup.Key);
+					}
+				}
+				else
+				{
+					ConversationWindow win;
 
-				//ShowBalloon(evt);
+					if (!ActiveConversationPopups.ContainsKey(evt.Conversation.Id))
+					{
+						win = new ConversationWindow();
+						ActiveConversationPopups[evt.Conversation.Id] = win;
+					}
+					else
+					{
+						win = ActiveConversationPopups[evt.Conversation.Id];
+					}
+
+					ShowDialog(win, evt);
+				}
 			});
 		}
 

@@ -27,7 +27,8 @@ namespace SoftPhone.Lync.ConversationTracker
 
 			if (e.Conversation.Modalities[ModalityTypes.AudioVideo].State != ModalityState.Disconnected)
 			{
-				StoreConversation(e.Conversation, ConversationID, null);
+				StoreConversation(e.Conversation, ConversationID);
+				GenerateConversationAddedEvent(e.Conversation);
 			}
 			else
 			{
@@ -44,7 +45,7 @@ namespace SoftPhone.Lync.ConversationTracker
 
 			if (!ActiveConversations.ContainsKey(ConversationID))
 			{
-				StoreConversation(modality.Conversation, ConversationID, e.NewState);
+				StoreConversation(modality.Conversation, ConversationID);
 				modality.ModalityStateChanged -= Program_ModalityStateChanged;
 			}
 		}
@@ -67,37 +68,31 @@ namespace SoftPhone.Lync.ConversationTracker
 
 			return appConversation;
 		}
-		private static void GenerateConversationEvent(Conversation conversation, ModalityState? state)
+		private static void GenerateConversationAddedEvent(Conversation conversation)
 		{
-			if (!state.HasValue)
-			{
-				var status = ConversationStatus.Inbound;
+			var status = ConversationStatus.Inbound;
 
-				if (conversation.Participants[0].IsSelf)
-					status = ConversationStatus.OutboundSkype;
+			if (conversation.Participants[0].IsSelf)
+				status = ConversationStatus.OutboundSkype;
 
-				var appConversation = CreateAppConversation(conversation, status);
-				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
-			}
-			else
-			{
-				if(state == ModalityState.Disconnected)
-				{
-					var appConversation = CreateAppConversation(conversation, ConversationStatus.Finished);
-					EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
-				}
-			}
+			var appConversation = CreateAppConversation(conversation, status);
+			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+		}
+		private static void GenerateConversationTerminatedEvent(Conversation conversation)
+		{
+			var status = ConversationStatus.Finished;
+
+			var appConversation = CreateAppConversation(conversation, status);
+			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
 		}
 
-		private static void StoreConversation(Conversation conversation, string ConversationID, ModalityState? state)
+		private static void StoreConversation(Conversation conversation, string ConversationID)
 		{
 			ActiveConversations.Add(ConversationID, new ConversationContainer()
 			{
 				Conversation = conversation,
 				ConversationCreated = DateTime.Now
 			});
-
-			GenerateConversationEvent(conversation, state);
 		}
 
 		static void ConversationManager_ConversationRemoved(object sender, Microsoft.Lync.Model.Conversation.ConversationManagerEventArgs e)
@@ -111,7 +106,7 @@ namespace SoftPhone.Lync.ConversationTracker
 				ActiveConversations.Remove(ConversationID);
 			}
 
-			GenerateConversationEvent(e.Conversation, ModalityState.Disconnected);
+			GenerateConversationTerminatedEvent(e.Conversation);
 		}
 
 		private static Core.Domain.Conversations.Contact CreateContact(Participant participant)
