@@ -72,6 +72,7 @@
     <Compile Include="Core\IDomainEventHandler.cs" />
     <Compile Include="Core\IQuery.cs" />
     <Compile Include="Core\QueryProcessor.cs" />
+    <Compile Include="Domain\Conversations\ConversationStatus.cs" />
     <Compile Include="Domain\Salesforce\SalesforceCredentials.cs" />
     <Compile Include="Domain\Salesforce\SalesforceSettings.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientConnectedEvent.cs" />

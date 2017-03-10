@@ -2,8 +2,6 @@
 using Cometd.Client;
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Domain.Salesforce;
-using System.Collections.Generic;
-using SoftPhone.Salesforce.SalesforceService;
 using SoftPhone.Salesforce.SfWrappers;
 
 namespace SoftPhone.Salesforce.Client
@@ -43,10 +41,10 @@ namespace SoftPhone.Salesforce.Client
 		{
 			try
 			{
-				using (var service = new SfApiService(_credentials))
-				{
-					service.Insert(conversation);
-				}
+				//using (var service = new SfApiService(_credentials))
+				//{
+				//	service.Insert(conversation);
+				//}
 
 				// Publishing to channels
 				//var data = new Dictionary<String, Object>();

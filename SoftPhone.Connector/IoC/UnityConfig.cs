@@ -27,7 +27,7 @@ namespace SoftPhone.Connector.IoC
 			{
 				foreach (Type eventHandler in domainEvent.Value)
 				{
-					container.RegisterType(domainEvent.Key, eventHandler);
+					container.RegisterType(domainEvent.Key, eventHandler, eventHandler.FullName);
 				}
 			}
 

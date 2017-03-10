@@ -15,7 +15,7 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 
 		public void Handle(ConversationAddedEvent evt)
 		{
-			_sfApi.Insert(evt.Conversation);
+			_sfApi.Insert(evt.Conversation, ConversationStatus.Inbound);
 		}
 	}
 }

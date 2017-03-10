@@ -1,8 +1,5 @@
 ﻿using Salesforce.Common;
 using SoftPhone.Core.Domain.Salesforce;
-using SoftPhone.Salesforce.SalesforceService;
-using System;
-using System.Net;
 
 namespace SoftPhone.Salesforce.SfWrappers
 {
