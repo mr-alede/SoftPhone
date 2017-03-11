@@ -68,8 +68,7 @@
     <Compile Include="EventHandlers\Lync\ConversationEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SfModel\SfCall.cs" />
-    <Compile Include="SfWrappers\ISfApiService.cs" />
-    <Compile Include="SfWrappers\SfApiService.cs" />
+    <Compile Include="Services\SfApiService.cs" />
     <Compile Include="SfWrappers\SfConnection.cs" />
   </ItemGroup>
   <ItemGroup>

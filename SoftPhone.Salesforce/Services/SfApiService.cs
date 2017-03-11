@@ -1,14 +1,15 @@
-﻿using Salesforce.Common.Models.Json;
-using Salesforce.Force;
+﻿using Salesforce.Force;
 using SoftPhone.Core.Core;
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Events.Salesforce;
 using SoftPhone.Core.Repositories.Salesforce;
+using SoftPhone.Core.Services.Salesforce;
 using SoftPhone.Salesforce.SfModel;
+using SoftPhone.Salesforce.SfWrappers;
 using System;
 using System.Threading.Tasks;
 
-namespace SoftPhone.Salesforce.SfWrappers
+namespace SoftPhone.Salesforce.Services
 {
 	public class SfApiService : ISfApiService
 	{
@@ -18,7 +19,7 @@ namespace SoftPhone.Salesforce.SfWrappers
 			_repo = repo;
 		}
 
-		public async Task<SuccessResponse> Insert(AppConversation conversation)
+		public async Task<AppConversation> Insert(AppConversation conversation)
 		{
 			try
 			{
@@ -30,8 +31,9 @@ namespace SoftPhone.Salesforce.SfWrappers
 				using (var client = new ForceClient(connection.InstanceUrl, connection.AccessToken, connection.ApiVersion))
 				{
 					var result = await client.CreateAsync(SfCall.SObjectTypeName, call);
+					conversation.SalesforceId = result.Id;
 
-					return result;
+					return conversation;
 				}
 			}
 			catch (Exception ex)

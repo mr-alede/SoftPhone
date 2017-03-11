@@ -1,6 +1,6 @@
 ﻿using SoftPhone.Core.Core;
 using SoftPhone.Core.Domain.Conversations;
-using SoftPhone.Salesforce.SfWrappers;
+using SoftPhone.Core.Services.Salesforce;
 
 namespace SoftPhone.Salesforce.EventHandlers.Lync
 {

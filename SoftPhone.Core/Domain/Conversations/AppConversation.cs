@@ -6,6 +6,7 @@ namespace SoftPhone.Core.Domain.Conversations
 	public class AppConversation
 	{
 		public string Id { get; private set; }
+		public string SalesforceId { get; set; }
 
 		public List<Contact> Contacts { get; set; }
 
