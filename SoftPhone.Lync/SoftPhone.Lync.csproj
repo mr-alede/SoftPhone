@@ -32,12 +32,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.Lync.Model, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Microsoft.Lync.Model.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Lync\SDK\Assemblies\Desktop\Microsoft.Lync.Model.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Uc, Version=4.0.7577.5, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\References\Microsoft.Office.Uc.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Lync\SDK\Assemblies\Desktop\Microsoft.Office.Uc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

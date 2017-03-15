@@ -25,11 +25,12 @@ namespace SoftPhone.Lync.ConversationTracker
 		static void ConversationManager_ConversationAdded(object sender, ConversationManagerEventArgs e)
 		{
 			string ConversationID = e.Conversation.Properties[ConversationProperty.Id].ToString();
+			var modalityState = e.Conversation.Modalities[ModalityTypes.AudioVideo].State;
 
-			if (e.Conversation.Modalities[ModalityTypes.AudioVideo].State != ModalityState.Disconnected)
+			if (modalityState != ModalityState.Disconnected)
 			{
 				StoreConversation(e.Conversation, ConversationID);
-				GenerateConversationAddedEvent(e.Conversation);
+				GenerateConversationAddedEvent(e.Conversation, modalityState);
 			}
 			else
 			{
@@ -69,12 +70,14 @@ namespace SoftPhone.Lync.ConversationTracker
 
 			return appConversation;
 		}
-		private static void GenerateConversationAddedEvent(Conversation conversation)
+		private static void GenerateConversationAddedEvent(Conversation conversation, ModalityState modalityState)
 		{
 			var status = ConversationStatus.Inbound;
 
-			if (conversation.Participants[0].IsSelf)
+			if (modalityState == ModalityState.Connecting || modalityState == ModalityState.Connected)
+			{
 				status = ConversationStatus.OutboundSkype;
+			}
 
 			var appConversation = CreateAppConversation(conversation, status);
 			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
