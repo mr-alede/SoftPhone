@@ -2,6 +2,7 @@
 using Microsoft.Lync.Model.Conversation;
 using SoftPhone.Core.Core;
 using SoftPhone.Core.Domain.Conversations;
+using SoftPhone.Core.Events.Lync;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -131,5 +132,17 @@ namespace SoftPhone.Lync.ConversationTracker
 			};
 
 		}
+
+		private static void HandleException(Exception e)
+		{
+			Exception exception = e;
+			while (exception.InnerException != null)
+			{
+				exception = exception.InnerException;
+			}
+
+			EventsAggregator.Raise(new LyncClientErrorEvent(exception.Message));
+		}
+
 	}
 }

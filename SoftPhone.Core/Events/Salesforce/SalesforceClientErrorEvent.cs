@@ -2,12 +2,10 @@
 
 namespace SoftPhone.Core.Events.Salesforce
 {
-	public class SalesforceClientErrorEvent : IDomainEvent
+	public class SalesforceClientErrorEvent : ErrorEventBase
 	{
-		public string Message { get; private set; }
-		public SalesforceClientErrorEvent(string message)
+		public SalesforceClientErrorEvent(string message):base(message)
 		{
-			Message = message;
 		}
 	}
 

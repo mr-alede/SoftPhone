@@ -75,9 +75,12 @@
     <Compile Include="Domain\Conversations\ConversationStatus.cs" />
     <Compile Include="Domain\Salesforce\SalesforceCredentials.cs" />
     <Compile Include="Domain\Salesforce\SalesforceSettings.cs" />
+    <Compile Include="Events\ErrorEventBase.cs" />
+    <Compile Include="Events\Lync\LyncClientErrorEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientConnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientDisconnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientErrorEvent.cs" />
+    <Compile Include="Helpers\ExceptionsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Salesforce\ISalesforceCredentialsRepository.cs" />
     <Compile Include="Services\Salesforce\ISfApiService.cs" />
