@@ -7,6 +7,7 @@ namespace SoftPhone.Core.Services.Salesforce
 	public interface ISfApiService: IService
 	{
 		Task<AppConversation> Insert(AppConversation conversation);
+		Task<AppConversation> Update(AppConversation conversation);
 	}
 
 }

@@ -10,7 +10,7 @@ namespace SoftPhone.Core.Domain.Conversations
 
 		public List<Contact> Contacts { get; set; }
 
-		public Contact Caller { get { return this.Contacts.First(); }}
+		public Contact Caller { get { return this.Contacts.FirstOrDefault(); }}
 
 		public Contact Self { get; set; }
 
@@ -20,6 +20,18 @@ namespace SoftPhone.Core.Domain.Conversations
 		{
 			Id = id;
 			Status = status;
+		}
+
+		public bool IsExternalCall
+		{
+			get
+			{
+				var caller = this.Caller;
+				if (caller != null && caller.Uri.Contains("tel:"))
+					return true;
+
+				return false;
+			}
 		}
 	}
 }

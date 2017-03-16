@@ -8,14 +8,30 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 	{
 		private readonly ISfApiService _sfApi;
 
+		private static AppConversation _lastInserted = null;
+
 		public ConversationEventHandler(ISfApiService sfApi)
 		{
 			_sfApi = sfApi;
 		}
 
-		public void Handle(ConversationEvent evt)
+		public async void Handle(ConversationEvent evt)
 		{
-			_sfApi.Insert(evt.Conversation);
+			if (!evt.Conversation.IsExternalCall)
+				return;
+
+			if (evt.Conversation.Status != ConversationStatus.Finished)
+			{
+				_lastInserted = await _sfApi.Insert(evt.Conversation);
+			}
+			else
+			{
+				evt.Conversation.SalesforceId = _lastInserted.SalesforceId;
+
+				await _sfApi.Update(evt.Conversation);
+
+				_lastInserted = null;
+			}
 		}
 	}
 }

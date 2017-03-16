@@ -43,6 +43,32 @@ namespace SoftPhone.Salesforce.Services
 			}
 		}
 
+		public async Task<AppConversation> Update(AppConversation conversation)
+		{
+			try
+			{
+				var connection = new SfConnection();
+				var credentials = _repo.ReadCredentials();
+				await connection.Login(credentials);
+
+				var call = new SfCall(conversation);
+				call.Id = null;
+
+				using (var client = new ForceClient(connection.InstanceUrl, connection.AccessToken, connection.ApiVersion))
+				{
+					var result = await client.UpdateAsync(SfCall.SObjectTypeName, conversation.SalesforceId, call);
+
+					return conversation;
+				}
+			}
+			catch (Exception ex)
+			{
+				HandleException(ex);
+				return null;
+			}
+		}
+
+
 		protected void HandleException(Exception e)
 		{
 			Exception exception = e;
