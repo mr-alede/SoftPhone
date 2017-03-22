@@ -16,6 +16,8 @@ namespace SoftPhone.Salesforce.SfModel
 		public string Status__c { get; set; }
 		public string User__c { get; set; }
 
+		public SfCall()
+		{}
 
 		public SfCall(AppConversation conversation)
 		{

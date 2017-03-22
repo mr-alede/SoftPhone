@@ -51,11 +51,13 @@ namespace SoftPhone.Salesforce.Services
 				var credentials = _repo.ReadCredentials();
 				await connection.Login(credentials);
 
-				var call = new SfCall(conversation);
-				call.Id = null;
-
 				using (var client = new ForceClient(connection.InstanceUrl, connection.AccessToken, connection.ApiVersion))
 				{
+					var call = await client.QueryByIdAsync<SfCall>(SfCall.SObjectTypeName, conversation.SalesforceId);
+
+					call.Status__c = conversation.Status.ToLookupString();
+					call.Id = null;
+
 					var result = await client.UpdateAsync(SfCall.SObjectTypeName, conversation.SalesforceId, call);
 
 					return conversation;
