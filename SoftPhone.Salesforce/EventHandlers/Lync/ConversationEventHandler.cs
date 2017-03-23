@@ -20,7 +20,8 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 			if (!evt.Conversation.IsExternalCall)
 				return;
 
-			if (evt.Conversation.Status != ConversationStatus.Finished)
+			if (evt.Conversation.Status != ConversationStatus.Finished && 
+				evt.Conversation.Status != ConversationStatus.Unanswered)
 			{
 				_lastInserted = await _sfApi.Insert(evt.Conversation);
 			}

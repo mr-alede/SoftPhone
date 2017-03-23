@@ -31,6 +31,8 @@ namespace SoftPhone.Lync.ConversationTracker
 			{
 				StoreConversation(e.Conversation, ConversationID);
 				GenerateConversationAddedEvent(e.Conversation, modalityState);
+
+				e.Conversation.Modalities[ModalityTypes.AudioVideo].ModalityStateChanged += Program_ModalityStateChanged;
 			}
 			else
 			{
@@ -50,6 +52,8 @@ namespace SoftPhone.Lync.ConversationTracker
 				StoreConversation(modality.Conversation, ConversationID);
 				modality.ModalityStateChanged -= Program_ModalityStateChanged;
 			}
+
+			GenerateConversationTerminatedEvent(modality.Conversation, e);
 		}
 
 		private static AppConversation CreateAppConversation(Conversation conversation, ConversationStatus status)
@@ -90,6 +94,21 @@ namespace SoftPhone.Lync.ConversationTracker
 			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
 		}
 
+		private static void GenerateConversationTerminatedEvent(Conversation conversation, ModalityStateChangedEventArgs e)
+		{
+			if (e.OldState == ModalityState.Connected && e.NewState == ModalityState.Disconnected)
+			{
+				var appConversation = CreateAppConversation(conversation, ConversationStatus.Finished);
+				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+			}
+
+			if (e.OldState != ModalityState.Connected && e.NewState == ModalityState.Disconnected)
+			{
+				var appConversation = CreateAppConversation(conversation, ConversationStatus.Unanswered);
+				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+			}
+		}
+
 		private static void StoreConversation(Conversation conversation, string ConversationID)
 		{
 			ActiveConversations.Add(ConversationID, new ConversationContainer()
@@ -110,7 +129,7 @@ namespace SoftPhone.Lync.ConversationTracker
 				ActiveConversations.Remove(ConversationID);
 			}
 
-			GenerateConversationTerminatedEvent(e.Conversation);
+			//GenerateConversationTerminatedEvent(e.Conversation);
 		}
 
 		private static Core.Domain.Conversations.Contact CreateContact(Participant participant)

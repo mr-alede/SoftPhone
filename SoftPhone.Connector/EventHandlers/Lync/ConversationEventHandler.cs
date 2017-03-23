@@ -17,7 +17,8 @@ namespace SoftPhone.Connector.EventHandlers.Lync
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				if (evt.Conversation.Status == ConversationStatus.Finished)
+				if (evt.Conversation.Status == ConversationStatus.Finished ||
+					evt.Conversation.Status == ConversationStatus.Unanswered)
 				{
 					foreach (var popup in ActiveConversationPopups.Select(x=>x).ToList())
 					{
