@@ -29,7 +29,7 @@ namespace SoftPhone.Salesforce.Client
 				var client = result.Result;
 
 				client.handshake();
-				client.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
+				var state = client.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
 
 				client.getChannel(CHANNEL).subscribe(new SalesforceListener());
 
@@ -66,7 +66,7 @@ namespace SoftPhone.Salesforce.Client
 			//var headers = new NameValueCollection();
 			//headers.Add("Authorization", "OAuth " + result.sessionId);
 			//transport.AddHeaders(headers);
-			transport.setOption(HttpRequestHeader.Authorization.ToString(), "OAuth " + connection.Id);
+			transport.setOption(HttpRequestHeader.Authorization.ToString(), "OAuth " + connection.AccessToken);
 
 			// only need the scheme and host, strip out the rest
 			var serverUri = new Uri(connection.InstanceUrl);

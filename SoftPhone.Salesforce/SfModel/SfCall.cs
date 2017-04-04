@@ -31,7 +31,13 @@ namespace SoftPhone.Salesforce.SfModel
 			if (string.IsNullOrEmpty(source))
 				return source;
 
-			return source.Replace("sip:", "").Replace("tel:", "");
+			var result = source.Replace("sip:", "").Replace("tel:", "");
+
+			int postfixIndex = result.IndexOf(";phone-context");
+			if (postfixIndex > -1)
+				result = result.Substring(0, postfixIndex + 1);
+
+			return result;
 		}
 	}
 }
