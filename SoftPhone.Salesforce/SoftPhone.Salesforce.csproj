@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cometd2, Version=2.1.4734.29273, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cometd2.2.1.4734.29273\lib\net35\cometd2.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -58,20 +54,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\ConnectedSfClient.cs" />
-    <Compile Include="Client\ConnectingSfClient.cs" />
-    <Compile Include="Client\DisconnectedSfClient.cs" />
     <Compile Include="Client\SalesforceListener.cs" />
-    <Compile Include="Client\SfClient.cs" />
-    <Compile Include="Client\SfClientStateBase.cs" />
     <Compile Include="CommandHandlers\SalesforceConnectCommandHandler.cs" />
     <Compile Include="EventHandlers\Lync\ConversationEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SfModel\SfCall.cs" />
     <Compile Include="Services\SfApiService.cs" />
     <Compile Include="SfWrappers\SfConnection.cs" />
+    <Compile Include="SfWrappers\SfOAuth.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CometD\Salesforce_PushTopics-master\cometd\cometd.csproj">
+      <Project>{ce60c8c6-3f04-447b-946c-d22397e39ec6}</Project>
+      <Name>cometd</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SoftPhone.Core\SoftPhone.Core.csproj">
       <Project>{5CF0864A-2285-4F1C-888E-1C7B885D78E3}</Project>
       <Name>SoftPhone.Core</Name>
@@ -81,6 +77,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

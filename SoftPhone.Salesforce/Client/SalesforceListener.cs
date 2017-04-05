@@ -1,6 +1,8 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
-using System;
+using SoftPhone.Core.Core;
+using SoftPhone.Core.Events.Salesforce;
+using System.Collections.Generic;
 
 namespace SoftPhone.Salesforce.Client
 {
@@ -8,7 +10,19 @@ namespace SoftPhone.Salesforce.Client
 	{
 		public void onMessage(IClientSessionChannel channel, IMessage message)
 		{
-			Console.WriteLine(message);
+			var data = message.DataAsDictionary;
+
+			var sobject = data["sobject"] as Dictionary<string, object>;
+
+			if (sobject != null)
+			{
+				string id = sobject["Id"] as string;
+
+				string selfUri = null;
+				string caleeUri = null;
+
+				EventsAggregator.Raise(new SalesforceOutcomingCallEvent(id, selfUri, caleeUri));
+			}
 		}
 	}
 }

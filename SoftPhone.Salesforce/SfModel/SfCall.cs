@@ -35,7 +35,7 @@ namespace SoftPhone.Salesforce.SfModel
 
 			int postfixIndex = result.IndexOf(";phone-context");
 			if (postfixIndex > -1)
-				result = result.Substring(0, postfixIndex + 1);
+				result = result.Substring(0, postfixIndex);
 
 			return result;
 		}

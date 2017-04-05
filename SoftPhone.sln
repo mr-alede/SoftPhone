@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPhone.Connector", "SoftPhone.Connector\SoftPhone.Connector.csproj", "{BC469A33-1CA0-4D42-BD22-D8945B3FD4FE}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{16E1B3FE-53D0-47B4-8DA6-B653D6C122CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPhone.Salesforce", "SoftPhone.Salesforce\SoftPhone.Salesforce.csproj", "{1E358069-742E-411D-A461-C8E72CF97CE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cometd", "..\CometD\Salesforce_PushTopics-master\cometd\cometd.csproj", "{CE60C8C6-3F04-447B-946C-D22397E39EC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{1E358069-742E-411D-A461-C8E72CF97CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E358069-742E-411D-A461-C8E72CF97CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E358069-742E-411D-A461-C8E72CF97CE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE60C8C6-3F04-447B-946C-D22397E39EC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE60C8C6-3F04-447B-946C-D22397E39EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE60C8C6-3F04-447B-946C-D22397E39EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE60C8C6-3F04-447B-946C-D22397E39EC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

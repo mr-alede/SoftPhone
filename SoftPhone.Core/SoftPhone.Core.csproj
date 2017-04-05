@@ -80,6 +80,7 @@
     <Compile Include="Events\Salesforce\SalesforceClientConnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientDisconnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientErrorEvent.cs" />
+    <Compile Include="Events\Salesforce\SalesforceOutcomingCallEvent.cs" />
     <Compile Include="Helpers\ExceptionsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Salesforce\ISalesforceCredentialsRepository.cs" />

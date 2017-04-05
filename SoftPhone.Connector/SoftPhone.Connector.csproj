@@ -99,6 +99,7 @@
     <Compile Include="Domain\Salesforce\SalesforceProtectedCredentials.cs" />
     <Compile Include="EventHandlers\Lync\ConversationEventHandler.cs" />
     <Compile Include="EventHandlers\Lync\LyncClientErrorEventHandler.cs" />
+    <Compile Include="EventHandlers\Lync\SalesforceOutcomingCallEventhandler.cs" />
     <Compile Include="EventHandlers\Salesforce\SalesforceClientConnectedEventHandler.cs" />
     <Compile Include="EventHandlers\Salesforce\SalesforceClientDisconnectedEventHandler.cs" />
     <Compile Include="EventHandlers\Salesforce\SalesforceClientErrorEventHandler.cs" />
