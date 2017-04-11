@@ -47,7 +47,7 @@ namespace SoftPhone.Connector.EventHandlers.Lync
 
 		private void ShowDialog(Window window, ConversationEvent evt)
 		{
-			var caller = evt.Conversation.Caller;
+			var caller = evt.Conversation.Other;
 
 			window.DataContext = new ConversationWindowViewModel
 			{

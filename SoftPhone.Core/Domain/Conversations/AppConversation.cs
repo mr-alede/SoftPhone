@@ -8,9 +8,10 @@ namespace SoftPhone.Core.Domain.Conversations
 		public string Id { get; private set; }
 		public string SalesforceId { get; set; }
 
-		public List<Contact> Contacts { get; set; }
+		//public List<Contact> Contacts { get; set; }
 
-		public Contact Caller { get { return this.Contacts.FirstOrDefault(); }}
+		//public Contact Other { get { return this.Contacts.FirstOrDefault(); }}
+		public Contact Other { get; set; }
 
 		public Contact Self { get; set; }
 
@@ -26,7 +27,7 @@ namespace SoftPhone.Core.Domain.Conversations
 		{
 			get
 			{
-				var caller = this.Caller;
+				var caller = this.Other;
 				if (caller != null && caller.Uri.Contains("tel:"))
 					return true;
 

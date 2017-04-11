@@ -4,7 +4,7 @@
 	{
 		Inbound = 0,
 		OutboundSkype = 1,
-		OutboundSf = 2,
+		OutboundSFDC = 2,
 		Unanswered = 3,
 		Finished = 4
 	}
@@ -16,8 +16,8 @@
 			if (status == ConversationStatus.OutboundSkype)
 				return "Outbound Skype";
 
-			if (status == ConversationStatus.OutboundSf)
-				return "Outbound Salesforce";
+			if (status == ConversationStatus.OutboundSFDC)
+				return "Outbound SFDC";
 
 			return status.ToString();
 		}

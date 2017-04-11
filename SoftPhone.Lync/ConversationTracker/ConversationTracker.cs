@@ -61,7 +61,7 @@ namespace SoftPhone.Lync.ConversationTracker
 			string id = conversation.Properties[ConversationProperty.Id].ToString();
 			var appConversation = new AppConversation(id, status);
 
-			appConversation.Contacts = conversation.Participants
+			var contacts = conversation.Participants
 				.Where(x => !x.IsSelf)
 				.Select(x => CreateContact(x))
 			.ToList();
@@ -70,7 +70,9 @@ namespace SoftPhone.Lync.ConversationTracker
 				.Where(x => x.IsSelf)
 				.Select(x => CreateContact(x))
 				.FirstOrDefault() ??
-				appConversation.Contacts.FirstOrDefault();
+				contacts.FirstOrDefault();
+
+			appConversation.Other = contacts.FirstOrDefault();
 
 			return appConversation;
 		}
@@ -145,12 +147,12 @@ namespace SoftPhone.Lync.ConversationTracker
 			{
 				Uri = participant.Contact.Uri,
 				Name = _client.ContactManager.GetContactByUri(participant.Contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString(),
-				Endpoints = endpoints.Select(e => new Core.Domain.Conversations.ContactEndpoint
-				{
-					Name = e.DisplayName,
-					Uri = e.Uri,
-					Type = (Core.Domain.Conversations.EndpointType)e.Type
-				}).ToList()
+				//Endpoints = endpoints.Select(e => new Core.Domain.Conversations.ContactEndpoint
+				//{
+				//	Name = e.DisplayName,
+				//	Uri = e.Uri,
+				//	Type = (Core.Domain.Conversations.EndpointType)e.Type
+				//}).ToList()
 			};
 
 		}

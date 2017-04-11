@@ -21,7 +21,7 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 				return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
-				evt.Conversation.Status != ConversationStatus.Unanswered)
+				evt.Conversation.Status != ConversationStatus.Unanswered )
 			{
 				_lastInserted = await _sfApi.Insert(evt.Conversation);
 			}

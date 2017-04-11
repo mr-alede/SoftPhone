@@ -7,6 +7,6 @@ namespace SoftPhone.Core.Domain.Conversations
 		public string Uri { get; set; }
 		public string Name { get; set; }
 
-		public List<ContactEndpoint> Endpoints { get; set; }
+		//public List<ContactEndpoint> Endpoints { get; set; }
 	}
 }
