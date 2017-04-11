@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPhone.Salesforce", "SoftPhone.Salesforce\SoftPhone.Salesforce.csproj", "{1E358069-742E-411D-A461-C8E72CF97CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cometd", "..\CometD\Salesforce_PushTopics-master\cometd\cometd.csproj", "{CE60C8C6-3F04-447B-946C-D22397E39EC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cometd", "cometd\cometd.csproj", "{CE60C8C6-3F04-447B-946C-D22397E39EC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

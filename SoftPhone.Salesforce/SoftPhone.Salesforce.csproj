@@ -64,7 +64,7 @@
     <Compile Include="SfWrappers\SfOAuth.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CometD\Salesforce_PushTopics-master\cometd\cometd.csproj">
+    <ProjectReference Include="..\cometd\cometd.csproj">
       <Project>{ce60c8c6-3f04-447b-946c-d22397e39ec6}</Project>
       <Name>cometd</Name>
     </ProjectReference>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
+using SoftPhone.Connector.Domain;
 using SoftPhone.Core.Core;
+using SoftPhone.Core.Domain;
 using System;
 
 namespace SoftPhone.Connector.IoC
@@ -22,6 +24,8 @@ namespace SoftPhone.Connector.IoC
 		public static void RegisterTypes(IUnityContainer container)
 		{
 			string[] assemblies = new[] { "SoftPhone.Connector", "SoftPhone.Lync", "SoftPhone.Core", "SoftPhone.Salesforce" };
+
+			container.RegisterInstance<IAppLogger>(new AppLogger());
 
 			foreach (var domainEvent in assemblies.GetIntefaceImplementationsWithWrapper<IDomainEvent>(typeof(IDomainEventHandler<>)))
 			{
