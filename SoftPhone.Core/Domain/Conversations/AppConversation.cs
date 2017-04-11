@@ -8,9 +8,6 @@ namespace SoftPhone.Core.Domain.Conversations
 		public string Id { get; private set; }
 		public string SalesforceId { get; set; }
 
-		//public List<Contact> Contacts { get; set; }
-
-		//public Contact Other { get { return this.Contacts.FirstOrDefault(); }}
 		public Contact Other { get; set; }
 
 		public Contact Self { get; set; }
@@ -34,5 +31,20 @@ namespace SoftPhone.Core.Domain.Conversations
 				return false;
 			}
 		}
+
+		public static string Normalize(string source)
+		{
+			if (string.IsNullOrEmpty(source))
+				return source;
+
+			var result = source.Replace("sip:", "").Replace("tel:", "");
+
+			int postfixIndex = result.IndexOf(";phone-context");
+			if (postfixIndex > -1)
+				result = result.Substring(0, postfixIndex);
+
+			return result;
+		}
+
 	}
 }

@@ -1,9 +1,7 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
 using SoftPhone.Core.Core;
-using SoftPhone.Core.Domain;
 using SoftPhone.Core.Events.Salesforce;
-using System;
 using System.Collections.Generic;
 
 namespace SoftPhone.Salesforce.Client
@@ -23,8 +21,8 @@ namespace SoftPhone.Salesforce.Client
 
 				if (status == "Outbound SFDC")
 				{
-					string selfUri = null;
-					string caleeUri = null;
+					string selfUri = sobject["Email__c"] as string;
+					string caleeUri = sobject["Number__c"] as string;
 
 					EventsAggregator.Raise(new SalesforceOutcomingCallEvent(id, selfUri, caleeUri));
 				}

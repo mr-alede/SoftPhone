@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ConversationTracker\ConversationContainer.cs" />
     <Compile Include="ConversationTracker\ConversationTracker.cs" />
+    <Compile Include="EventHandlers\Salesforce\SalesforceOutcomingCallEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

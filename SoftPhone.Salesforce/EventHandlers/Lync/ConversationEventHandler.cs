@@ -1,13 +1,12 @@
 ﻿using SoftPhone.Core.Core;
 using SoftPhone.Core.Domain;
 using SoftPhone.Core.Domain.Conversations;
-using SoftPhone.Core.Events.Salesforce;
+using SoftPhone.Core.Events.Lync;
 using SoftPhone.Core.Services.Salesforce;
-using System;
 
 namespace SoftPhone.Salesforce.EventHandlers.Lync
 {
-	public class ConversationEventHandler : IDomainEventHandler<ConversationEvent>, IDomainEventHandler<SalesforceOutcomingCallEvent>
+	public class ConversationEventHandler : IDomainEventHandler<ConversationEvent>, IDomainEventHandler<LyncClientStartConversationEvent>
 	{
 		private readonly ISfApiService _sfApi;
 		private readonly IAppLogger _logger;
@@ -26,7 +25,8 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 				return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
-				evt.Conversation.Status != ConversationStatus.Unanswered )
+				evt.Conversation.Status != ConversationStatus.Unanswered &&
+				(_lastInserted == null || _lastInserted.Status != ConversationStatus.OutboundSFDC ))
 			{
 				_lastInserted = await _sfApi.Insert(evt.Conversation);
 			}
@@ -42,9 +42,9 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 			_logger.Debug(string.Format("Skype call detected: {0}", evt.Conversation.Status.ToLookupString()));
 		}
 
-		public void Handle(SalesforceOutcomingCallEvent domainEvent)
+		public void Handle(LyncClientStartConversationEvent evt)
 		{
-			_logger.Debug(string.Format("Outbound call detected: {0}", domainEvent.Id));
+			_lastInserted = evt.Conversation;
 		}
 	}
 }

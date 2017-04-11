@@ -78,6 +78,7 @@
     <Compile Include="Domain\Salesforce\SalesforceSettings.cs" />
     <Compile Include="Events\ErrorEventBase.cs" />
     <Compile Include="Events\Lync\LyncClientErrorEvent.cs" />
+    <Compile Include="Events\Lync\LyncClientStartConversationEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientConnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientDisconnectedEvent.cs" />
     <Compile Include="Events\Salesforce\SalesforceClientErrorEvent.cs" />

@@ -21,23 +21,23 @@ namespace SoftPhone.Salesforce.SfModel
 
 		public SfCall(AppConversation conversation)
 		{
-			this.Email__c = Normalize(conversation.Self.Uri);
-			this.Number__c = Normalize(conversation.Other.Uri);
+			this.Email__c = AppConversation.Normalize(conversation.Self.Uri);
+			this.Number__c = AppConversation.Normalize(conversation.Other.Uri);
 			this.Status__c = conversation.Status.ToLookupString();
 		}
 
-		private string Normalize(string source)
-		{
-			if (string.IsNullOrEmpty(source))
-				return source;
+		//private string Normalize(string source)
+		//{
+		//	if (string.IsNullOrEmpty(source))
+		//		return source;
 
-			var result = source.Replace("sip:", "").Replace("tel:", "");
+		//	var result = source.Replace("sip:", "").Replace("tel:", "");
 
-			int postfixIndex = result.IndexOf(";phone-context");
-			if (postfixIndex > -1)
-				result = result.Substring(0, postfixIndex);
+		//	int postfixIndex = result.IndexOf(";phone-context");
+		//	if (postfixIndex > -1)
+		//		result = result.Substring(0, postfixIndex);
 
-			return result;
-		}
+		//	return result;
+		//}
 	}
 }
