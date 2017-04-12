@@ -15,34 +15,34 @@ namespace SoftPhone.Connector.EventHandlers.Lync
 
 		public void Handle(ConversationEvent evt)
 		{
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				if (evt.Conversation.Status == ConversationStatus.Finished ||
-					evt.Conversation.Status == ConversationStatus.Unanswered)
-				{
-					foreach (var popup in ActiveConversationPopups.Select(x=>x).ToList())
-					{
-						popup.Value.Close();
-						ActiveConversationPopups.Remove(popup.Key);
-					}
-				}
-				else
-				{
-					ConversationWindow win;
+			//Application.Current.Dispatcher.Invoke(() =>
+			//{
+			//	if (evt.Conversation.Status == ConversationStatus.Finished ||
+			//		evt.Conversation.Status == ConversationStatus.Unanswered)
+			//	{
+			//		foreach (var popup in ActiveConversationPopups.Select(x=>x).ToList())
+			//		{
+			//			popup.Value.Close();
+			//			ActiveConversationPopups.Remove(popup.Key);
+			//		}
+			//	}
+			//	else
+			//	{
+			//		ConversationWindow win;
 
-					if (!ActiveConversationPopups.ContainsKey(evt.Conversation.Id))
-					{
-						win = new ConversationWindow();
-						ActiveConversationPopups[evt.Conversation.Id] = win;
-					}
-					else
-					{
-						win = ActiveConversationPopups[evt.Conversation.Id];
-					}
+			//		if (!ActiveConversationPopups.ContainsKey(evt.Conversation.Id))
+			//		{
+			//			win = new ConversationWindow();
+			//			ActiveConversationPopups[evt.Conversation.Id] = win;
+			//		}
+			//		else
+			//		{
+			//			win = ActiveConversationPopups[evt.Conversation.Id];
+			//		}
 
-					ShowDialog(win, evt);
-				}
-			});
+			//		ShowDialog(win, evt);
+			//	}
+			//});
 		}
 
 		private void ShowDialog(Window window, ConversationEvent evt)

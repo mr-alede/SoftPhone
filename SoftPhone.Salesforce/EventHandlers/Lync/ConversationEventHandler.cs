@@ -35,9 +35,14 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 				evt.Conversation.SalesforceId = _lastInserted.SalesforceId;
 
 				await _sfApi.Update(evt.Conversation);
+			}
 
+			if (evt.Conversation.Status == ConversationStatus.Finished ||
+				evt.Conversation.Status == ConversationStatus.Unanswered)
+			{
 				_lastInserted = null;
 			}
+
 
 			_logger.Debug(string.Format("Skype call detected: {0}", evt.Conversation.Status.ToLookupString()));
 		}

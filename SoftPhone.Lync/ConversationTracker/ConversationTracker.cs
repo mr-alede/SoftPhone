@@ -30,8 +30,6 @@ namespace SoftPhone.Lync.ConversationTracker
 			if (modalityState != ModalityState.Disconnected)
 			{
 				StoreConversation(e.Conversation, ConversationID);
-				GenerateConversationAddedEvent(e.Conversation, modalityState);
-
 				e.Conversation.Modalities[ModalityTypes.AudioVideo].ModalityStateChanged += Program_ModalityStateChanged;
 			}
 			else
@@ -50,8 +48,10 @@ namespace SoftPhone.Lync.ConversationTracker
 			if (!ActiveConversations.ContainsKey(ConversationID))
 			{
 				StoreConversation(modality.Conversation, ConversationID);
-				modality.ModalityStateChanged -= Program_ModalityStateChanged;
+				//modality.ModalityStateChanged -= Program_ModalityStateChanged;
 			}
+
+			GenerateConversationAddedEvent(modality.Conversation, e);
 
 			GenerateConversationTerminatedEvent(modality.Conversation, e);
 		}
@@ -76,24 +76,20 @@ namespace SoftPhone.Lync.ConversationTracker
 
 			return appConversation;
 		}
-		private static void GenerateConversationAddedEvent(Conversation conversation, ModalityState modalityState)
-		{
-			var status = ConversationStatus.Inbound;
 
-			if (modalityState == ModalityState.Connecting || modalityState == ModalityState.Connected)
+		private static void GenerateConversationAddedEvent(Conversation conversation, ModalityStateChangedEventArgs e)
+		{
+			if (e.OldState == ModalityState.Disconnected && e.NewState == ModalityState.Connecting)
 			{
-				status = ConversationStatus.OutboundSkype;
+				var appConversation = CreateAppConversation(conversation, ConversationStatus.OutboundSkype);
+				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
 			}
 
-			var appConversation = CreateAppConversation(conversation, status);
-			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
-		}
-		private static void GenerateConversationTerminatedEvent(Conversation conversation)
-		{
-			var status = ConversationStatus.Finished;
-
-			var appConversation = CreateAppConversation(conversation, status);
-			EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+			if (e.OldState == ModalityState.Notified && e.NewState == ModalityState.Joining)
+			{
+				var appConversation = CreateAppConversation(conversation, ConversationStatus.Inbound);
+				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+			}
 		}
 
 		private static void GenerateConversationTerminatedEvent(Conversation conversation, ModalityStateChangedEventArgs e)

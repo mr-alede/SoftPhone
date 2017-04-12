@@ -33,6 +33,7 @@ namespace SoftPhone.Lync.EventHandlers.Salesforce
 				{
 					var appConversation = new AppConversation("", ConversationStatus.OutboundSFDC)
 					{
+						SalesforceId = evt.Id,
 						Self = new Core.Domain.Conversations.Contact { Uri = evt.SelfUri },
 						Other = new Core.Domain.Conversations.Contact { Uri = evt.CaleeUri }
 					};
