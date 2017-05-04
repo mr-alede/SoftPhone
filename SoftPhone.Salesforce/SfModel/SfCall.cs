@@ -4,40 +4,26 @@ namespace SoftPhone.Salesforce.SfModel
 {
 	public class SfCall
 	{
-		public const string SObjectTypeName = "Call__c";
+		public const string SObjectTypeName = "Call_CxO__c";
 
 		public string Id { get; set; }
 
-		public string Contact__c { get; set;}
-		public string Email__c { get; set; }
-		public string Lead__c { get; set; }
+		public string Contact_CxO__c { get; set;}
+		public string Email_CxO__c { get; set; }
+		public string Lead_CxO__c { get; set; }
 
-		public string Number__c { get; set; }
-		public string Status__c { get; set; }
-		public string User__c { get; set; }
+		public string Number_CxO__c { get; set; }
+		public string Status_CxO__c { get; set; }
+		public string User_CxO__c { get; set; }
 
 		public SfCall()
 		{}
 
 		public SfCall(AppConversation conversation)
 		{
-			this.Email__c = AppConversation.Normalize(conversation.Self.Uri);
-			this.Number__c = AppConversation.Normalize(conversation.Other.Uri);
-			this.Status__c = conversation.Status.ToLookupString();
+			this.Email_CxO__c = AppConversation.Normalize(conversation.Self.Uri);
+			this.Number_CxO__c = AppConversation.Normalize(conversation.Other.Uri);
+			this.Status_CxO__c = conversation.Status.ToLookupString();
 		}
-
-		//private string Normalize(string source)
-		//{
-		//	if (string.IsNullOrEmpty(source))
-		//		return source;
-
-		//	var result = source.Replace("sip:", "").Replace("tel:", "");
-
-		//	int postfixIndex = result.IndexOf(";phone-context");
-		//	if (postfixIndex > -1)
-		//		result = result.Substring(0, postfixIndex);
-
-		//	return result;
-		//}
 	}
 }

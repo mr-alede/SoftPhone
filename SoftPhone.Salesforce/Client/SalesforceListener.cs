@@ -17,12 +17,12 @@ namespace SoftPhone.Salesforce.Client
 			if (sobject != null)
 			{
 				string id = sobject["Id"] as string;
-				string status = sobject["Status__c"] as string;
+				string status = sobject["Status_CxO__c"] as string;
 
 				if (status == "Outbound SFDC")
 				{
-					string selfUri = sobject["Email__c"] as string;
-					string caleeUri = sobject["Number__c"] as string;
+					string selfUri = sobject["Email_CxO__c"] as string;
+					string caleeUri = sobject["Number_CxO__c"] as string;
 
 					EventsAggregator.Raise(new SalesforceOutcomingCallEvent(id, selfUri, caleeUri));
 				}

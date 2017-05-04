@@ -55,7 +55,7 @@ namespace SoftPhone.Salesforce.Services
 				{
 					var call = await client.QueryByIdAsync<SfCall>(SfCall.SObjectTypeName, conversation.SalesforceId);
 
-					call.Status__c = conversation.Status.ToLookupString();
+					call.Status_CxO__c = conversation.Status.ToLookupString();
 					call.Id = null;
 
 					var result = await client.UpdateAsync(SfCall.SObjectTypeName, conversation.SalesforceId, call);
