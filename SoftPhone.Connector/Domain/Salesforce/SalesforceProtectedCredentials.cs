@@ -11,6 +11,8 @@ namespace SoftPhone.Connector.Domain.Salesforce
 		public string Login { get; protected set; }
 		public byte[] Password { get; protected set; }
 		public byte[] SecurityToken { get; protected set; }
+		public string InstanceName { get; protected set; }
+
 
 		public SalesforceProtectedCredentials(SalesforceCredentials credentials)
 		{
@@ -21,6 +23,8 @@ namespace SoftPhone.Connector.Domain.Salesforce
 
 			var token = Encoding.ASCII.GetBytes(credentials.SecurityToken);
 			SecurityToken = ProtectedData.Protect(token, null, DataProtectionScope.CurrentUser);
+
+			InstanceName = credentials.InstanceName;
 		}
 
 		public SalesforceCredentials ExtractCredentials()
@@ -33,6 +37,8 @@ namespace SoftPhone.Connector.Domain.Salesforce
 
 			var token = ProtectedData.Unprotect(SecurityToken, null, DataProtectionScope.CurrentUser);
 			credentials.SecurityToken = Encoding.ASCII.GetString(token);
+
+			credentials.InstanceName = InstanceName;
 
 			return credentials;
 		}

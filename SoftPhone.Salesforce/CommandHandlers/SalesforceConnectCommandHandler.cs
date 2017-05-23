@@ -16,6 +16,8 @@ namespace SoftPhone.Salesforce.CommandHandlers
 {
 	public class SalesforceConnectCommandHandler : ICommandHandler<SalesforceConnectCommand>
 	{
+		private static BayeuxClient client;
+
 		private readonly ISalesforceCredentialsRepository _repo;
 
 		private const String CHANNEL = "/topic/Call_All";
@@ -37,6 +39,12 @@ namespace SoftPhone.Salesforce.CommandHandlers
 
 		public void Execute(SalesforceConnectCommand command)
 		{
+			if (client != null)
+			{
+				client.disconnect();
+				client = null;
+			}
+
 			var credentials = _repo.ReadCredentials();
 			CreateClient(credentials).ContinueWith(result =>
 			{
@@ -46,7 +54,7 @@ namespace SoftPhone.Salesforce.CommandHandlers
 					return;
 				}
 
-				var client = result.Result;
+				client = result.Result;
 
 				client.handshake();
 				var state = client.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
