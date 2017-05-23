@@ -12,7 +12,7 @@ namespace SoftPhone.Connector.Popups
 	{
 		private readonly ISalesforceCredentialsRepository _repo;
 
-		private string _oldInstanceName;
+		private SalesforceCredentials _oldCredentials;
 		private string _instanceName;
 		public string InstanceName
 		{
@@ -32,7 +32,8 @@ namespace SoftPhone.Connector.Popups
 
 			_repo = App.Resolve<ISalesforceCredentialsRepository>();
 
-			var credentials = _repo.ReadCredentials(); ;
+			var credentials = _repo.ReadCredentials();
+			_oldCredentials = credentials;
 
 			var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
 			this.Left = desktopWorkingArea.Right - this.Width;
@@ -42,7 +43,6 @@ namespace SoftPhone.Connector.Popups
 			Login.Text = credentials.Login;
 
 			InstanceName = credentials.InstanceName;
-			_oldInstanceName = credentials.InstanceName;
 
 		}
 
@@ -57,7 +57,7 @@ namespace SoftPhone.Connector.Popups
 
 			_repo.SaveCredentials(credentials);
 
-			if(_oldInstanceName != InstanceName)
+			if(!credentials.Equals(_oldCredentials))
 				CommandsBus.Execute(new SalesforceConnectCommand());
 
 			this.Close();

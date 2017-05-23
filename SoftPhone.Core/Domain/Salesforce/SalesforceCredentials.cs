@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace SoftPhone.Core.Domain.Salesforce
 {
-	public class SalesforceCredentials
+	public class SalesforceCredentials : IEquatable<SalesforceCredentials>
 	{
 		public string Login { get; set; }
 		public string Password { get; set; }
@@ -19,9 +20,9 @@ namespace SoftPhone.Core.Domain.Salesforce
 				return _instanceName;
 			}
 
-			set 
-			{ 
-				_instanceName = value; 
+			set
+			{
+				_instanceName = value;
 			}
 		}
 
@@ -35,11 +36,21 @@ namespace SoftPhone.Core.Domain.Salesforce
 
 		public SalesforceSettings Settings
 		{
-			get 
+			get
 			{
 				string settingsSrc = ConfigurationManager.AppSettings[InstanceName];
 				return SalesforceSettings.Parse(settingsSrc);
 			}
+		}
+
+		public bool Equals(SalesforceCredentials other)
+		{
+			if (other == null)
+				return false;
+
+			return this.Login == other.Login &&
+				this.Password == other.Password &&
+				this.InstanceName == other.InstanceName;
 		}
 	}
 
