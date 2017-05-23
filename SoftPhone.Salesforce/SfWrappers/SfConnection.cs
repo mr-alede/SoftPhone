@@ -18,9 +18,10 @@ namespace SoftPhone.Salesforce.SfWrappers
 		{
 			using (var auth = new AuthenticationClient())
 			{
-				var url = credentials.InstanceUrl;// "https://login.salesforce.com/services/oauth2/token";
+				var settings = credentials.Settings;
+				var url = settings.InstanceUrl;// "https://login.salesforce.com/services/oauth2/token";
 
-				await auth.UsernamePasswordAsync(SalesforceSettings.ConsumerKey, SalesforceSettings.ConsumerSecret, credentials.Login, credentials.Password + credentials.SecurityToken, url);
+				await auth.UsernamePasswordAsync(settings.ConsumerKey, settings.ConsumerSecret, credentials.Login, credentials.Password + settings.SecurityToken, url);
 
 				this.Id = auth.Id;
 				this.InstanceUrl = auth.InstanceUrl;

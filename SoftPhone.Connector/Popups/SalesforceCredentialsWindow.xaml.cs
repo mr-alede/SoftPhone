@@ -40,7 +40,6 @@ namespace SoftPhone.Connector.Popups
 
 			Password.Password = credentials.Password;
 			Login.Text = credentials.Login;
-			Token.Text = credentials.SecurityToken;
 
 			InstanceName = credentials.InstanceName;
 			_oldInstanceName = credentials.InstanceName;
@@ -53,7 +52,6 @@ namespace SoftPhone.Connector.Popups
 
 			credentials.Login = Login.Text;
 			credentials.Password = Password.Password;
-			credentials.SecurityToken = Token.Text;
 
 			credentials.InstanceName = InstanceName;
 

@@ -10,7 +10,6 @@ namespace SoftPhone.Connector.Domain.Salesforce
 	{
 		public string Login { get; protected set; }
 		public byte[] Password { get; protected set; }
-		public byte[] SecurityToken { get; protected set; }
 		public string InstanceName { get; protected set; }
 
 
@@ -20,9 +19,6 @@ namespace SoftPhone.Connector.Domain.Salesforce
 
 			var password = Encoding.ASCII.GetBytes(credentials.Password);
 			Password = ProtectedData.Protect(password, null, DataProtectionScope.CurrentUser);
-
-			var token = Encoding.ASCII.GetBytes(credentials.SecurityToken);
-			SecurityToken = ProtectedData.Protect(token, null, DataProtectionScope.CurrentUser);
 
 			InstanceName = credentials.InstanceName;
 		}
@@ -34,9 +30,6 @@ namespace SoftPhone.Connector.Domain.Salesforce
 
 			var password = ProtectedData.Unprotect(Password, null, DataProtectionScope.CurrentUser);
 			credentials.Password = Encoding.ASCII.GetString(password);
-
-			var token = ProtectedData.Unprotect(SecurityToken, null, DataProtectionScope.CurrentUser);
-			credentials.SecurityToken = Encoding.ASCII.GetString(token);
 
 			credentials.InstanceName = InstanceName;
 

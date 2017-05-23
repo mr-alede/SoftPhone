@@ -12,14 +12,10 @@ namespace SoftPhone.Salesforce.SfWrappers
 {
 	public class SfOAuth
 	{
-		string loginEndpoint = "https://login.salesforce.com/services/oauth2/token";
-		//string userName = ConfigurationManager.AppSettings["UserName"];
-		//string password = ConfigurationManager.AppSettings["Password"] + ConfigurationManager.AppSettings["SecurityToken"];
-		//string clientId = ConfigurationManager.AppSettings["ClientId"];
-		//string clientSecret = ConfigurationManager.AppSettings["ClientSecret"];
-
 		public Dictionary<string, string> Login(SalesforceCredentials credentials)
 		{
+			var settings = credentials.Settings;
+
 			String jsonResponse;
 
 			using (var client = new HttpClient())
@@ -27,15 +23,15 @@ namespace SoftPhone.Salesforce.SfWrappers
 				var request = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
                     {"grant_type", "password"},
-                    {"client_id", SalesforceSettings.ConsumerKey},
-                    {"client_secret", SalesforceSettings.ConsumerSecret},
+                    {"client_id", settings.ConsumerKey},
+                    {"client_secret", settings.ConsumerSecret},
                     {"username", credentials.Login},
-                    {"password", credentials.Password + credentials.SecurityToken}
+                    {"password", credentials.Password + settings.SecurityToken}
                 });
 
 				request.Headers.Add("X-PrettyPrint", "1");
 
-				var response = client.PostAsync(loginEndpoint, request).Result;
+				var response = client.PostAsync(settings.InstanceUrl, request).Result;
 				jsonResponse = response.Content.ReadAsStringAsync().Result;
 			}
 

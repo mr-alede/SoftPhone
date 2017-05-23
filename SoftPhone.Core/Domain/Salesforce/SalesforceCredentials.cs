@@ -7,7 +7,6 @@ namespace SoftPhone.Core.Domain.Salesforce
 	{
 		public string Login { get; set; }
 		public string Password { get; set; }
-		public string SecurityToken { get; set; }
 
 		private string _instanceName;
 		public string InstanceName
@@ -34,11 +33,12 @@ namespace SoftPhone.Core.Domain.Salesforce
 			"Sandbox"
 		};
 
-		public string InstanceUrl
+		public SalesforceSettings Settings
 		{
 			get 
 			{
-				return ConfigurationManager.AppSettings[InstanceName];
+				string settingsSrc = ConfigurationManager.AppSettings[InstanceName];
+				return SalesforceSettings.Parse(settingsSrc);
 			}
 		}
 	}
