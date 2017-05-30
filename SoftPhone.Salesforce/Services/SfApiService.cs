@@ -37,6 +37,8 @@ namespace SoftPhone.Salesforce.Services
 					var result = await client.CreateAsync(SfCall.SObjectTypeName, call);
 					conversation.SalesforceId = result.Id;
 
+					_logger.Debug(string.Format("Salesforce call added: {0}", result.Id));
+
 					return conversation;
 				}
 			}
@@ -64,6 +66,8 @@ namespace SoftPhone.Salesforce.Services
 
 					var result = await client.UpdateAsync(SfCall.SObjectTypeName, conversation.SalesforceId, call);
 
+					_logger.Debug(string.Format("Salesforce call updated: {0}", call.Id));
+
 					return conversation;
 				}
 			}
@@ -83,7 +87,7 @@ namespace SoftPhone.Salesforce.Services
 				exception = exception.InnerException;
 			}
 
-			_logger.Debug(string.Format("Salesforce API exception: {0}", exception.Message));
+			_logger.Error(string.Format("Salesforce API exception: {0}", exception.Message));
 
 			EventsAggregator.Raise(new SalesforceClientErrorEvent(exception.Message));
 		}
