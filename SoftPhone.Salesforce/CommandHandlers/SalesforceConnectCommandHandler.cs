@@ -2,6 +2,7 @@
 using Cometd.Client.Transport;
 using SoftPhone.Core.Commands.Salesforce;
 using SoftPhone.Core.Core;
+using SoftPhone.Core.Domain;
 using SoftPhone.Core.Domain.Salesforce;
 using SoftPhone.Core.Events.Salesforce;
 using SoftPhone.Core.Repositories.Salesforce;
@@ -19,6 +20,7 @@ namespace SoftPhone.Salesforce.CommandHandlers
 		private static BayeuxClient client;
 
 		private readonly ISalesforceCredentialsRepository _repo;
+		private readonly IAppLogger _logger;
 
 		private const String CHANNEL = "/topic/Call_All";
 		private const String STREAMING_ENDPOINT_URI = "/cometd/36.0";
@@ -32,9 +34,10 @@ namespace SoftPhone.Salesforce.CommandHandlers
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
 		}
 
-		public SalesforceConnectCommandHandler(ISalesforceCredentialsRepository repo)
+		public SalesforceConnectCommandHandler(ISalesforceCredentialsRepository repo, IAppLogger logger)
 		{
 			_repo = repo;
+			_logger = logger;
 		}
 
 		public void Execute(SalesforceConnectCommand command)
@@ -93,6 +96,8 @@ namespace SoftPhone.Salesforce.CommandHandlers
 			{
 				exception = exception.InnerException;
 			}
+
+			_logger.Error("Salesforce push notifications exception: " + exception.Message);
 
 			EventsAggregator.Raise(new SalesforceClientErrorEvent(exception.Message));
 		}

@@ -21,8 +21,8 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 
 		public async void Handle(ConversationEvent evt)
 		{
-			if (!evt.Conversation.IsExternalCall)
-				return;
+			//if (!evt.Conversation.IsExternalCall)
+			//	return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
 				evt.Conversation.Status != ConversationStatus.Unanswered &&

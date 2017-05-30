@@ -1,5 +1,6 @@
 ﻿using Salesforce.Force;
 using SoftPhone.Core.Core;
+using SoftPhone.Core.Domain;
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Events.Salesforce;
 using SoftPhone.Core.Repositories.Salesforce;
@@ -14,9 +15,12 @@ namespace SoftPhone.Salesforce.Services
 	public class SfApiService : ISfApiService
 	{
 		private readonly ISalesforceCredentialsRepository _repo;
-		public SfApiService(ISalesforceCredentialsRepository repo)
+		private readonly IAppLogger _logger;
+
+		public SfApiService(ISalesforceCredentialsRepository repo, IAppLogger logger)
 		{
 			_repo = repo;
+			_logger = logger;
 		}
 
 		public async Task<AppConversation> Insert(AppConversation conversation)
@@ -78,6 +82,8 @@ namespace SoftPhone.Salesforce.Services
 			{
 				exception = exception.InnerException;
 			}
+
+			_logger.Debug(string.Format("Salesforce API exception: {0}", exception.Message));
 
 			EventsAggregator.Raise(new SalesforceClientErrorEvent(exception.Message));
 		}
