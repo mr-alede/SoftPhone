@@ -85,11 +85,17 @@ namespace SoftPhone.Lync.ConversationTracker
 				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
 			}
 
-			if (e.OldState == ModalityState.Notified && e.NewState == ModalityState.Joining)
+			if (e.OldState == ModalityState.Disconnected && e.NewState == ModalityState.Notified)
 			{
 				var appConversation = CreateAppConversation(conversation, ConversationStatus.Inbound);
 				EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
 			}
+
+			//if (e.OldState == ModalityState.Notified && e.NewState == ModalityState.Joining)
+			//{
+			//	var appConversation = CreateAppConversation(conversation, ConversationStatus.Inbound);
+			//	EventsAggregator.Raise(new Core.Domain.Conversations.ConversationEvent(appConversation));
+			//}
 		}
 
 		private static void GenerateConversationTerminatedEvent(Conversation conversation, ModalityStateChangedEventArgs e)

@@ -6,21 +6,21 @@ namespace SoftPhone.Connector.Domain
 {
 	public class AppLogger : IAppLogger
 	{
-		private readonly Logger _logger;
+		public static readonly Logger Logger;
 
-		public AppLogger()
+		static AppLogger()
 		{
-			this._logger = LogManager.GetLogger("file");
+			Logger = LogManager.GetLogger("file");
 		}
 
 		public void Debug(string message)
 		{
-			_logger.Debug(message);
+			Logger.Debug(message);
 		}
 
 		public void Error(string message)
 		{
-			_logger.Error(message);
+			Logger.Error(message);
 		}
 	}
 }

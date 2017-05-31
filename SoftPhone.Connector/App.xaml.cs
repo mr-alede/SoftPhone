@@ -1,10 +1,13 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Practices.Unity;
+using SoftPhone.Connector.Domain;
 using SoftPhone.Connector.IoC;
 using SoftPhone.Core.Commands.Salesforce;
 using SoftPhone.Core.Core;
 using SoftPhone.Lync.ConversationTracker;
+using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace SoftPhone.Connector
 {
@@ -27,6 +30,9 @@ namespace SoftPhone.Connector
 
 			//create the notifyicon (it's a resource declared in NotifyIconResources.xaml
 			notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
+			var currentDomain = AppDomain.CurrentDomain;
+			currentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		}
 
 		protected override void OnExit(ExitEventArgs e)
@@ -39,5 +45,14 @@ namespace SoftPhone.Connector
 		{
 			return _container.Resolve<T>();
 		}
+
+
+		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			var ex = (Exception)e.ExceptionObject;
+			AppLogger.Logger.Error("UnhandledException caught : " + ex.Message);
+			AppLogger.Logger.Error("UnhandledException StackTrace : " + ex.StackTrace);
+			AppLogger.Logger.Fatal("Runtime terminating: {0}", e.IsTerminating);
+		}  
 	}
 }

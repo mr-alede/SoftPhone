@@ -37,11 +37,11 @@ namespace SoftPhone.Core.Domain.Conversations
 			if (string.IsNullOrEmpty(source))
 				return source;
 
-			var result = source.Replace("sip:", "").Replace("tel:00", "+").Replace("tel:", "");
+			var result = source.Replace("sip:", "").Replace("tel:00", "+").Replace("tel:", "+");
 
-			int postfixIndex = result.IndexOf(";phone-context");
-			if (postfixIndex > -1)
-				result = result.Substring(0, postfixIndex);
+			//int postfixIndex = result.IndexOf(";phone-context");
+			//if (postfixIndex > -1)
+			//	result = result.Substring(0, postfixIndex);
 
 			return result;
 		}

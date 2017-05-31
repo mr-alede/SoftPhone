@@ -3,6 +3,7 @@ using SoftPhone.Core.Domain;
 using SoftPhone.Core.Domain.Conversations;
 using SoftPhone.Core.Events.Lync;
 using SoftPhone.Core.Services.Salesforce;
+using System;
 
 namespace SoftPhone.Salesforce.EventHandlers.Lync
 {
@@ -21,13 +22,13 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 
 		public async void Handle(ConversationEvent evt)
 		{
-			if (!evt.Conversation.IsExternalCall)
-				return;
-
 			_logger.Debug(string.Format("Skype call detected: {0} -> {1} status: {2}",
 				evt.Conversation.Self.Uri,
 				evt.Conversation.Other.Uri,
 				evt.Conversation.Status.ToLookupString()));
+
+			//if (!evt.Conversation.IsExternalCall)
+			//	return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
 				evt.Conversation.Status != ConversationStatus.Unanswered &&
