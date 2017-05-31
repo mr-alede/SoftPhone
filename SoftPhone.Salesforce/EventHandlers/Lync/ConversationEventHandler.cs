@@ -24,6 +24,11 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 			if (!evt.Conversation.IsExternalCall)
 				return;
 
+			_logger.Debug(string.Format("Skype call detected: {0} -> {1} status: {2}",
+				evt.Conversation.Self.Uri,
+				evt.Conversation.Other.Uri,
+				evt.Conversation.Status.ToLookupString()));
+
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
 				evt.Conversation.Status != ConversationStatus.Unanswered &&
 				(_lastInserted == null || _lastInserted.Status != ConversationStatus.OutboundSFDC ))
@@ -42,9 +47,6 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 			{
 				_lastInserted = null;
 			}
-
-
-			_logger.Debug(string.Format("Skype call detected: {0}", evt.Conversation.Status.ToLookupString()));
 		}
 
 		public void Handle(LyncClientStartConversationEvent evt)

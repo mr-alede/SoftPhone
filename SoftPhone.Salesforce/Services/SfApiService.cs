@@ -37,7 +37,10 @@ namespace SoftPhone.Salesforce.Services
 					var result = await client.CreateAsync(SfCall.SObjectTypeName, call);
 					conversation.SalesforceId = result.Id;
 
-					_logger.Debug(string.Format("Salesforce call added: {0}", result.Id));
+					_logger.Debug(string.Format("Salesforce call added: {0} -> {1} id: {2}", 
+						conversation.Self.Uri,
+						conversation.Other.Uri,
+						result.Id));
 
 					return conversation;
 				}
@@ -66,7 +69,10 @@ namespace SoftPhone.Salesforce.Services
 
 					var result = await client.UpdateAsync(SfCall.SObjectTypeName, conversation.SalesforceId, call);
 
-					_logger.Debug(string.Format("Salesforce call updated: {0}", call.Id));
+					_logger.Debug(string.Format("Salesforce call updated: {0} -> {1} id: {2}",
+						conversation.Self.Uri,
+						conversation.Other.Uri,
+						result.Id));
 
 					return conversation;
 				}
