@@ -27,8 +27,8 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 				evt.Conversation.Other.Uri,
 				evt.Conversation.Status.ToLookupString()));
 
-			//if (!evt.Conversation.IsExternalCall)
-			//	return;
+			if (!evt.Conversation.IsExternalCall)
+				return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
 				evt.Conversation.Status != ConversationStatus.Unanswered &&
