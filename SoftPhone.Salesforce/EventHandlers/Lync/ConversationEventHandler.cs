@@ -22,22 +22,33 @@ namespace SoftPhone.Salesforce.EventHandlers.Lync
 
 		public async void Handle(ConversationEvent evt)
 		{
-			_logger.Debug(string.Format("Skype call detected: {0} -> {1} status: {2}",
+			_logger.Debug(string.Format("Skype call detected: self:{0}, other:{1} status: {2}",
 				evt.Conversation.Self.Uri,
 				evt.Conversation.Other.Uri,
 				evt.Conversation.Status.ToLookupString()));
 
-			if (!evt.Conversation.IsExternalCall)
-				return;
+			//if (!evt.Conversation.IsExternalCall)
+			//	return;
 
 			if (evt.Conversation.Status != ConversationStatus.Finished && 
 				evt.Conversation.Status != ConversationStatus.Unanswered &&
 				(_lastInserted == null || _lastInserted.Status != ConversationStatus.OutboundSFDC ))
 			{
+				_logger.Debug(string.Format("Adding call to Salesforce: self:{0}, other:{1} status: {2}",
+					evt.Conversation.Self.Uri,
+					evt.Conversation.Other.Uri,
+					evt.Conversation.Status.ToLookupString()));
+
 				_lastInserted = await _sfApi.Insert(evt.Conversation);
 			}
 			else
 			{
+				_logger.Debug(string.Format("Saving call status to Salesforce: self:{0}, other:{1} status: {2} SalesforceId: {3}",
+					evt.Conversation.Self.Uri,
+					evt.Conversation.Other.Uri,
+					evt.Conversation.Status.ToLookupString(),
+					_lastInserted.SalesforceId));
+
 				evt.Conversation.SalesforceId = _lastInserted.SalesforceId;
 
 				await _sfApi.Update(evt.Conversation);

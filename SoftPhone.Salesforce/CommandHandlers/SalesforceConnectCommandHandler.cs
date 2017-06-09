@@ -64,6 +64,8 @@ namespace SoftPhone.Salesforce.CommandHandlers
 
 				client.getChannel(CHANNEL).subscribe(new SalesforceListener());
 
+				_logger.Debug("Connected to salesforce");
+
 				EventsAggregator.Raise(new SalesforceClientConnectedEvent());
 			});
 
