@@ -64,15 +64,19 @@ namespace SoftPhone.Lync.ConversationTracker
 			var contacts = conversation.Participants
 				.Where(x => !x.IsSelf)
 				.Select(x => CreateContact(x))
-			.ToList();
+				.ToList();
 
 			appConversation.Self = conversation.Participants
 				.Where(x => x.IsSelf)
 				.Select(x => CreateContact(x))
-				.FirstOrDefault() ??
-				contacts.FirstOrDefault();
+				.FirstOrDefault();
 
-			appConversation.Other = contacts.FirstOrDefault();
+			if(appConversation.Self == null)
+			{
+				appConversation.Self = CreateContact(_client.Self.Contact);
+			}
+
+			appConversation.Other = contacts.Where(x => x.Uri != appConversation.Self.Uri).FirstOrDefault();
 
 			return appConversation;
 		}
@@ -157,6 +161,15 @@ namespace SoftPhone.Lync.ConversationTracker
 				//}).ToList()
 			};
 
+		}
+
+		private static Core.Domain.Conversations.Contact CreateContact(Microsoft.Lync.Model.Contact contact)
+		{
+			return new Core.Domain.Conversations.Contact
+			{
+				Uri = contact.Uri,
+				Name = _client.ContactManager.GetContactByUri(contact.Uri).GetContactInformation(ContactInformationType.DisplayName).ToString(),
+			};
 		}
 
 		private static void HandleException(Exception e)
